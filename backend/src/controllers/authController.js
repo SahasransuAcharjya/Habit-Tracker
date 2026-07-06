@@ -1,59 +1,51 @@
-const register = async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
+const catchAsync = require("../utils/catchAsync");
+const { registerUser, loginUser } = require("../services/authService");
 
-    return res.status(201).json({
-      success: true,
-      message: "Register controller reached successfully.",
-      data: {
-        name,
-        email,
-      },
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Failed to register user.",
-      error: error.message,
-    });
-  }
-};
+const register = catchAsync(async (req, res) => {
+  const { name, email, password, assistantTone } = req.body;
 
-const login = async (req, res) => {
-  try {
-    const { email } = req.body;
+  const result = await registerUser({
+    name,
+    email,
+    password,
+    assistantTone,
+  });
 
-    return res.status(200).json({
-      success: true,
-      message: "Login controller reached successfully.",
-      data: {
-        email,
-      },
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Failed to login user.",
-      error: error.message,
-    });
-  }
-};
+  return res.status(201).json({
+    success: true,
+    message: "User registered successfully.",
+    data: {
+      user: result.user,
+      token: result.token,
+    },
+  });
+});
 
-const getMe = async (req, res) => {
-  try {
-    return res.status(200).json({
-      success: true,
-      message: "Current user fetched successfully.",
-      data: req.user || null,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Failed to fetch current user.",
-      error: error.message,
-    });
-  }
-};
+const login = catchAsync(async (req, res) => {
+  const { email, password } = req.body;
+
+  const result = await loginUser({
+    email,
+    password,
+  });
+
+  return res.status(200).json({
+    success: true,
+    message: "Login successful.",
+    data: {
+      user: result.user,
+      token: result.token,
+    },
+  });
+});
+
+const getMe = catchAsync(async (req, res) => {
+  return res.status(200).json({
+    success: true,
+    message: "Current user fetched successfully.",
+    data: req.user,
+  });
+});
 
 module.exports = {
   register,

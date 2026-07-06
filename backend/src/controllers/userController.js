@@ -1,38 +1,42 @@
-const getProfile = async (req, res) => {
-  try {
-    return res.status(200).json({
-      success: true,
-      message: "User profile fetched successfully.",
-      data: {
-        id: req.user?.id || null,
-        name: req.user?.name || "Demo User",
-        email: req.user?.email || "demo@example.com",
-      },
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Failed to fetch user profile.",
-      error: error.message,
-    });
-  }
-};
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
+const {
+  findUserById,
+  updateUserById,
+} = require("../repositories/userRepository");
 
-const updateProfile = async (req, res) => {
-  try {
-    return res.status(200).json({
-      success: true,
-      message: "User profile updated successfully.",
-      data: req.body,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Failed to update user profile.",
-      error: error.message,
-    });
+const getProfile = catchAsync(async (req, res) => {
+  const user = await findUserById(req.user.id);
+
+  if (!user) {
+    throw new AppError("User not found.", 404);
   }
-};
+
+  return res.status(200).json({
+    success: true,
+    message: "Profile fetched successfully.",
+    data: user,
+  });
+});
+
+const updateProfile = catchAsync(async (req, res) => {
+  const allowedUpdates = ["name", "assistantTone"];
+  const payload = {};
+
+  for (const key of allowedUpdates) {
+    if (typeof req.body[key] !== "undefined") {
+      payload[key] = req.body[key];
+    }
+  }
+
+  const updatedUser = await updateUserById(req.user.id, payload);
+
+  return res.status(200).json({
+    success: true,
+    message: "Profile updated successfully.",
+    data: updatedUser,
+  });
+});
 
 module.exports = {
   getProfile,
