@@ -7,6 +7,7 @@ const {
   createTask,
   updateTask,
   completeTask,
+  skipTask,
   deleteTask,
 } = require("../controllers/taskController");
 
@@ -23,6 +24,7 @@ router.get("/:id", authMiddleware, validateMiddleware(taskIdSchema), getTaskById
 router.post("/", authMiddleware, validateMiddleware(createTaskSchema), createTask);
 router.patch("/:id", authMiddleware, validateMiddleware(updateTaskSchema), updateTask);
 router.patch("/:id/complete", authMiddleware, validateMiddleware(taskIdSchema), completeTask);
+router.patch("/:id/skip", authMiddleware, validateMiddleware(taskIdSchema), skipTask);
 router.delete("/:id", authMiddleware, validateMiddleware(taskIdSchema), deleteTask);
 
 module.exports = router;

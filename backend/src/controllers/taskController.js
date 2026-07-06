@@ -5,6 +5,7 @@ const {
   createUserTask,
   updateUserTask,
   completeUserTask,
+  skipUserTask,
   removeUserTask,
 } = require("../services/taskService");
 
@@ -19,7 +20,7 @@ const getTasks = catchAsync(async (req, res) => {
 });
 
 const getTaskById = catchAsync(async (req, res) => {
-  const task = await getUserTaskById(req.params.id);
+  const task = await getUserTaskById(req.params.id, req.user.id);
 
   return res.status(200).json({
     success: true,
@@ -39,7 +40,7 @@ const createTask = catchAsync(async (req, res) => {
 });
 
 const updateTask = catchAsync(async (req, res) => {
-  const task = await updateUserTask(req.params.id, req.body);
+  const task = await updateUserTask(req.params.id, req.user.id, req.body);
 
   return res.status(200).json({
     success: true,
@@ -49,17 +50,27 @@ const updateTask = catchAsync(async (req, res) => {
 });
 
 const completeTask = catchAsync(async (req, res) => {
-  const task = await completeUserTask(req.params.id);
+  const taskInstance = await completeUserTask(req.params.id, req.user.id);
 
   return res.status(200).json({
     success: true,
     message: "Task marked as completed successfully.",
-    data: task,
+    data: taskInstance,
+  });
+});
+
+const skipTask = catchAsync(async (req, res) => {
+  const taskInstance = await skipUserTask(req.params.id, req.user.id);
+
+  return res.status(200).json({
+    success: true,
+    message: "Task skipped successfully.",
+    data: taskInstance,
   });
 });
 
 const deleteTask = catchAsync(async (req, res) => {
-  const deletedTask = await removeUserTask(req.params.id);
+  const deletedTask = await removeUserTask(req.params.id, req.user.id);
 
   return res.status(200).json({
     success: true,
@@ -74,5 +85,6 @@ module.exports = {
   createTask,
   updateTask,
   completeTask,
+  skipTask,
   deleteTask,
 };

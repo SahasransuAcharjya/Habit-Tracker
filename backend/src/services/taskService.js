@@ -1,3 +1,4 @@
+const prisma = require("../config/db");
 const AppError = require("../utils/appError");
 const {
   findTasksByUserId,
@@ -6,16 +7,21 @@ const {
   updateTaskById,
   deleteTaskById,
 } = require("../repositories/taskRepository");
+const { startOfDay, endOfDay } = require("../utils/dateTime");
 
 const getUserTasks = async (userId) => {
   return findTasksByUserId(userId);
 };
 
-const getUserTaskById = async (id) => {
+const getUserTaskById = async (id, userId) => {
   const task = await findTaskById(id);
 
   if (!task) {
     throw new AppError("Task not found.", 404);
+  }
+
+  if (userId && task.userId !== userId) {
+    throw new AppError("You are not allowed to access this task.", 403);
   }
 
   return task;
@@ -42,8 +48,8 @@ const createUserTask = async (userId, data) => {
   });
 };
 
-const updateUserTask = async (id, data) => {
-  await getUserTaskById(id);
+const updateUserTask = async (id, userId, data) => {
+  await getUserTaskById(id, userId);
 
   return updateTaskById(id, {
     ...data,
@@ -53,16 +59,91 @@ const updateUserTask = async (id, data) => {
   });
 };
 
-const completeUserTask = async (id) => {
-  await getUserTaskById(id);
+const getTodayTaskInstance = async (taskId, userId) => {
+  const start = startOfDay(new Date());
+  const end = endOfDay(new Date());
 
-  return updateTaskById(id, {
-    isActive: false,
+  const taskInstance = await prisma.taskInstance.findFirst({
+    where: {
+      taskId,
+      userId,
+      scheduledDate: {
+        gte: start,
+        lte: end,
+      },
+    },
+    orderBy: {
+      scheduledDate: "desc",
+    },
+  });
+
+  return taskInstance;
+};
+
+const completeUserTask = async (taskId, userId) => {
+  await getUserTaskById(taskId, userId);
+
+  const taskInstance = await getTodayTaskInstance(taskId, userId);
+
+  if (!taskInstance) {
+    throw new AppError("No task instance found for today.", 404);
+  }
+
+  if (taskInstance.status === "COMPLETED") {
+    throw new AppError("Task is already completed for today.", 400);
+  }
+
+  if (taskInstance.status === "MISSED") {
+    throw new AppError("Task is already marked missed for today.", 400);
+  }
+
+  if (taskInstance.status === "SKIPPED") {
+    throw new AppError("Task is already skipped for today.", 400);
+  }
+
+  return prisma.taskInstance.update({
+    where: {
+      id: taskInstance.id,
+    },
+    data: {
+      status: "COMPLETED",
+      completedAt: new Date(),
+      missedAt: null,
+      skippedAt: null,
+      scoreAwarded: 20,
+    },
   });
 };
 
-const removeUserTask = async (id) => {
-  await getUserTaskById(id);
+const skipUserTask = async (taskId, userId) => {
+  await getUserTaskById(taskId, userId);
+
+  const taskInstance = await getTodayTaskInstance(taskId, userId);
+
+  if (!taskInstance) {
+    throw new AppError("No task instance found for today.", 404);
+  }
+
+  if (taskInstance.status === "COMPLETED") {
+    throw new AppError("Completed task cannot be skipped.", 400);
+  }
+
+  return prisma.taskInstance.update({
+    where: {
+      id: taskInstance.id,
+    },
+    data: {
+      status: "SKIPPED",
+      skippedAt: new Date(),
+      completedAt: null,
+      missedAt: null,
+      scoreAwarded: 0,
+    },
+  });
+};
+
+const removeUserTask = async (id, userId) => {
+  await getUserTaskById(id, userId);
 
   return deleteTaskById(id);
 };
@@ -73,5 +154,7 @@ module.exports = {
   createUserTask,
   updateUserTask,
   completeUserTask,
+  skipUserTask,
   removeUserTask,
+  getTodayTaskInstance,
 };
