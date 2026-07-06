@@ -7,8 +7,17 @@ const {
 } = require("../controllers/reportController");
 
 const authMiddleware = require("../middleware/authMiddleware");
+const validateMiddleware = require("../middleware/validateMiddleware");
+const {
+  generateReportSchema,
+} = require("../validators/reportValidator");
 
 router.get("/today", authMiddleware, getTodayReport);
-router.post("/generate", authMiddleware, generateTodayReport);
+router.post(
+  "/generate",
+  authMiddleware,
+  validateMiddleware(generateReportSchema),
+  generateTodayReport
+);
 
 module.exports = router;

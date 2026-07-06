@@ -9,10 +9,16 @@ const {
 } = require("../controllers/habitController");
 
 const authMiddleware = require("../middleware/authMiddleware");
+const validateMiddleware = require("../middleware/validateMiddleware");
+const {
+  createHabitSchema,
+  updateHabitSchema,
+  habitIdSchema,
+} = require("../validators/habitValidator");
 
 router.get("/", authMiddleware, getHabits);
-router.post("/", authMiddleware, createHabit);
-router.patch("/:id", authMiddleware, updateHabit);
-router.delete("/:id", authMiddleware, deleteHabit);
+router.post("/", authMiddleware, validateMiddleware(createHabitSchema), createHabit);
+router.patch("/:id", authMiddleware, validateMiddleware(updateHabitSchema), updateHabit);
+router.delete("/:id", authMiddleware, validateMiddleware(habitIdSchema), deleteHabit);
 
 module.exports = router;

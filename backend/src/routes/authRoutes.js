@@ -8,9 +8,14 @@ const {
 } = require("../controllers/authController");
 
 const authMiddleware = require("../middleware/authMiddleware");
+const validateMiddleware = require("../middleware/validateMiddleware");
+const {
+  registerSchema,
+  loginSchema,
+} = require("../validators/authValidator");
 
-router.post("/register", register);
-router.post("/login", login);
+router.post("/register", validateMiddleware(registerSchema), register);
+router.post("/login", validateMiddleware(loginSchema), login);
 router.get("/me", authMiddleware, getMe);
 
 module.exports = router;

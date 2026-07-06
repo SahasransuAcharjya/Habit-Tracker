@@ -1,27 +1,32 @@
-const validateMiddleware = (validator) => {
+const { ZodError } = require("zod");
+
+const validateMiddleware = (schema) => {
   return (req, res, next) => {
     try {
-      if (typeof validator !== "function") {
-        return next();
-      }
+      const validatedData = schema.parse({
+        body: req.body,
+        params: req.params,
+        query: req.query,
+      });
 
-      const result = validator(req);
-
-      if (result && result.success === false) {
-        return res.status(400).json({
-          success: false,
-          message: result.message || "Validation failed.",
-          errors: result.errors || [],
-        });
-      }
+      if (validatedData.body) req.body = validatedData.body;
+      if (validatedData.params) req.params = validatedData.params;
+      if (validatedData.query) req.query = validatedData.query;
 
       next();
     } catch (error) {
-      return res.status(400).json({
-        success: false,
-        message: "Validation error.",
-        error: error.message,
-      });
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          success: false,
+          message: "Validation failed.",
+          errors: error.errors.map((item) => ({
+            path: item.path.join("."),
+            message: item.message,
+          })),
+        });
+      }
+
+      return next(error);
     }
   };
 };
