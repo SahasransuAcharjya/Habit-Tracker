@@ -1,6 +1,7 @@
 const app = require("./app");
 const env = require("./config/env");
 const prisma = require("./config/db");
+const { registerJobs } = require("./jobs");
 
 const PORT = env.port || 5000;
 
@@ -10,6 +11,8 @@ const startServer = async () => {
   try {
     await prisma.$connect();
     console.log("Database connected successfully.");
+
+    registerJobs();
 
     server = app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);

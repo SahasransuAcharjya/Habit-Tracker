@@ -1,22 +1,47 @@
+const prisma = require("../config/db");
+const { startOfDay } = require("../utils/dateTime");
+
 const runSendReminderJob = async () => {
   try {
-    const now = new Date();
+    const today = startOfDay(new Date());
 
-    console.log(`[JOB] sendReminderJob started at ${now.toISOString()}`);
+    const pendingInstances = await prisma.taskInstance.findMany({
+      where: {
+        scheduledDate: today,
+        status: "PENDING",
+      },
+      include: {
+        task: true,
+        user: true,
+      },
+    });
 
-    console.log("[JOB] Reminder sending placeholder executed successfully.");
+    if (pendingInstances.length > 0) {
+      await prisma.taskInstance.updateMany({
+        where: {
+          id: {
+            in: pendingInstances.map((item) => item.id),
+          },
+        },
+        data: {
+          reminderSentCount: {
+            increment: 1,
+          },
+        },
+      });
+    }
 
     return {
       success: true,
-      message: "Reminders sent successfully.",
-      ranAt: now.toISOString(),
+      message: "Reminders processed successfully.",
+      reminderCount: pendingInstances.length,
     };
   } catch (error) {
     console.error("[JOB] sendReminderJob failed:", error.message);
 
     return {
       success: false,
-      message: "Failed to send reminders.",
+      message: "Failed to process reminders.",
       error: error.message,
     };
   }
