@@ -1,8 +1,7 @@
 const prisma = require("../config/db");
 const { startOfDay } = require("../utils/dateTime");
-const {
-  generateTodayUserReport,
-} = require("../services/reportService");
+const { generateTodayUserReport } = require("../services/reportService");
+const { sendPushToManyUsers } = require("../services/notificationService");
 
 const runGenerateDailyReportJob = async () => {
   try {
@@ -19,6 +18,11 @@ const runGenerateDailyReportJob = async () => {
 
     for (const user of users) {
       await generateTodayUserReport(user.id, user.assistantTone || "BALANCED", today);
+      await sendPushToManyUsers([user.id], {
+        title: "Daily Report Ready",
+        body: "Your activity report for today is ready.",
+        url: "/reports/today",
+      });
       generatedCount += 1;
     }
 

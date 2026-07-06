@@ -1,5 +1,7 @@
 const prisma = require("../config/db");
 const { startOfDay } = require("../utils/dateTime");
+const { sendPushToManyUsers } = require("../services/notificationService");
+const { buildReminderPayload } = require("../utils/reminderPayload");
 
 const runSendReminderJob = async () => {
   try {
@@ -16,32 +18,60 @@ const runSendReminderJob = async () => {
       },
     });
 
-    if (pendingInstances.length > 0) {
-      await prisma.taskInstance.updateMany({
-        where: {
-          id: {
-            in: pendingInstances.map((item) => item.id),
-          },
-        },
-        data: {
-          reminderSentCount: {
-            increment: 1,
-          },
-        },
+    if (!pendingInstances.length) {
+      return {
+        success: true,
+        message: "No reminders to send.",
+        reminderCount: 0,
+      };
+    }
+
+    const userMap = new Map();
+
+    for (const instance of pendingInstances) {
+      if (!userMap.has(instance.userId)) {
+        userMap.set(instance.userId, []);
+      }
+      userMap.get(instance.userId).push(instance);
+    }
+
+    const results = [];
+
+    for (const [userId, instances] of userMap.entries()) {
+      const payload = buildReminderPayload(instances[0]);
+      const sendResult = await sendPushToManyUsers([userId], payload);
+      results.push({
+        userId,
+        count: instances.length,
+        sendResult,
       });
     }
 
+    await prisma.taskInstance.updateMany({
+      where: {
+        id: {
+          in: pendingInstances.map((item) => item.id),
+        },
+      },
+      data: {
+        reminderSentCount: {
+          increment: 1,
+        },
+      },
+    });
+
     return {
       success: true,
-      message: "Reminders processed successfully.",
+      message: "Reminders sent successfully.",
       reminderCount: pendingInstances.length,
+      results,
     };
   } catch (error) {
     console.error("[JOB] sendReminderJob failed:", error.message);
 
     return {
       success: false,
-      message: "Failed to process reminders.",
+      message: "Failed to send reminders.",
       error: error.message,
     };
   }
