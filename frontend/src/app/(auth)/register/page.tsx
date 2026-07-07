@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { useAuthContext } from "@/context/AuthContext";
 
 type RegisterResponse = {
   success: boolean;
@@ -31,6 +32,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const { login } = useAuthContext();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -65,11 +67,7 @@ export default function RegisterPage() {
       }
 
       if (result.data?.token) {
-        localStorage.setItem("activity_token", result.data.token);
-      }
-
-      if (result.data?.user) {
-        localStorage.setItem("activity_user", JSON.stringify(result.data.user));
+        login(result.data.token, result.data.user);
       }
 
       setSuccessMessage(result.message || "Account created successfully.");

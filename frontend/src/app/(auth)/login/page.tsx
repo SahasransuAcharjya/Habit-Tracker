@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { useAuthContext } from "@/context/AuthContext";
 
 type LoginResponse = {
   success: boolean;
@@ -28,6 +29,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const { login } = useAuthContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
@@ -60,11 +62,7 @@ export default function LoginPage() {
       }
 
       if (result.data?.token) {
-        localStorage.setItem("activity_token", result.data.token);
-      }
-
-      if (result.data?.user) {
-        localStorage.setItem("activity_user", JSON.stringify(result.data.user));
+        login(result.data.token, result.data.user);
       }
 
       setSuccessMessage(result.message || "Login successful.");
