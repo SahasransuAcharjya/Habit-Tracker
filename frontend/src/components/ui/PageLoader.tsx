@@ -1,9 +1,15 @@
-import React from 'react';
+import LoadingSpinner from "./LoadingSpinner";
 
-export default function PageLoader() {
+type PageLoaderProps = {
+  text?: string;
+};
+
+export default function PageLoader({
+  text = "Loading page...",
+}: PageLoaderProps) {
   return (
-    <div>
-      PageLoader
+    <div className="flex min-h-[60vh] items-center justify-center">
+      <LoadingSpinner text={text} />
     </div>
   );
 }
