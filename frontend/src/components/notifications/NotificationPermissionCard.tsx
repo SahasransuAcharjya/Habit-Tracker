@@ -77,7 +77,7 @@ export default function NotificationPermissionCard() {
       }
 
       const token = localStorage.getItem("activity_token");
-      const result = await apiPost<{ success: boolean; message: string }>("/notifications", subscription as NotificationSubscriptionPayload, token);
+      const result = await apiPost<{ success: boolean; message: string }>("/notifications", subscription as unknown as NotificationSubscriptionPayload, token);
 
       if (!result || ("success" in result && !result.success)) {
         throw new Error((result as any).message || "Failed to save notification subscription.");

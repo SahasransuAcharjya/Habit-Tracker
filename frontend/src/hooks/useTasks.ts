@@ -53,28 +53,28 @@ export function useTasks() {
   const createTask = useCallback(async (payload: CreateTaskPayload) => {
     const result = await apiPost<{ data: Task }>("/tasks", payload, getToken());
 
-    setTasks((prev) => [result.data, ...prev]);
+    setTasks((prev: Task[]) => [result.data, ...prev]);
     return result.data;
   }, []);
 
   const deleteTask = useCallback(async (taskId: string) => {
     await apiDelete(`/tasks/${taskId}`, getToken());
 
-    setTasks((prev) => prev.filter((task) => task.id !== taskId));
+    setTasks((prev: Task[]) => prev.filter((task) => task.id !== taskId));
 
-    setSelectedTask((prev) => (prev?.id === taskId ? null : prev));
+    setSelectedTask((prev: Task | null) => (prev?.id === taskId ? null : prev));
   }, []);
 
   const completeTask = useCallback(async (taskId: string) => {
     await apiPatch(`/tasks/${taskId}/complete`, undefined, getToken());
 
-    setTasks((prev) =>
+    setTasks((prev: Task[]) =>
       prev.map((task) =>
         task.id === taskId ? { ...task, status: "DONE" } : task
       )
     );
 
-    setSelectedTask((prev) =>
+    setSelectedTask((prev: Task | null) =>
       prev?.id === taskId ? { ...prev, status: "DONE" } : prev
     );
   }, []);
@@ -82,13 +82,13 @@ export function useTasks() {
   const skipTask = useCallback(async (taskId: string) => {
     await apiPatch(`/tasks/${taskId}/skip`, undefined, getToken());
 
-    setTasks((prev) =>
+    setTasks((prev: Task[]) =>
       prev.map((task) =>
         task.id === taskId ? { ...task, status: "SKIPPED" } : task
       )
     );
 
-    setSelectedTask((prev) =>
+    setSelectedTask((prev: Task | null) =>
       prev?.id === taskId ? { ...prev, status: "SKIPPED" } : prev
     );
   }, []);

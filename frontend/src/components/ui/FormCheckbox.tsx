@@ -5,6 +5,7 @@ type FormCheckboxProps = {
   checked: boolean;
   onChange: (checked: boolean) => void;
   disabled?: boolean;
+  className?: string;
 };
 
 export default function FormCheckbox({
@@ -12,9 +13,10 @@ export default function FormCheckbox({
   checked,
   onChange,
   disabled = false,
+  className = "",
 }: FormCheckboxProps) {
   return (
-    <label className="flex cursor-pointer items-center gap-3 text-sm text-slate-200">
+    <label className={`flex cursor-pointer items-center gap-3 text-sm text-slate-200 ${className}`}>
       <input
         type="checkbox"
         checked={checked}

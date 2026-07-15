@@ -169,7 +169,7 @@ export default function SettingsPage() {
           <FormCheckbox 
             label="Enable Reminders"
             checked={notifState.remindersEnabled}
-            onChange={(e) => setNotifState((prev) => ({ ...prev, remindersEnabled: e.target.checked }))}
+            onChange={(checked) => setNotifState((prev) => ({ ...prev, remindersEnabled: checked }))}
             className="mb-4"
           />
 
@@ -183,7 +183,7 @@ export default function SettingsPage() {
           <FormCheckbox 
             label="Auto-mark missed tasks"
             checked={notifState.autoMarkMissedEnabled}
-            onChange={(e) => setNotifState((prev) => ({ ...prev, autoMarkMissedEnabled: e.target.checked }))}
+            onChange={(checked) => setNotifState((prev) => ({ ...prev, autoMarkMissedEnabled: checked }))}
             className="mt-4"
           />
         </div>
