@@ -27,7 +27,7 @@ type TaskFormProps = {
     endTime: string | null;
     reminderInterval: number | null;
     recurrenceRule: string | null;
-  }) => Promise<void> | void;
+  }) => Promise<any> | any;
   loading?: boolean;
 };
 
