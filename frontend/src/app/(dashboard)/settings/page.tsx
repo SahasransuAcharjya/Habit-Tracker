@@ -1,6 +1,14 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { apiGet, apiPatch } from "@/lib/api";
+import FormInput from "@/components/ui/FormInput";
+import FormSelect from "@/components/ui/FormSelect";
+import Button from "@/components/ui/Button";
+import FormCheckbox from "@/components/ui/FormCheckbox";
+import { useNotifications } from "@/hooks/useNotifications";
+import NotificationPermissionCard from "@/components/notifications/NotificationPermissionCard";
+import ReminderStatusCard from "@/components/notifications/ReminderStatusCard";
 
 type Profile = {
   id?: string;
@@ -27,20 +35,20 @@ export default function SettingsPage() {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  const { settings, updateNotificationSettings, loading: notifLoading } = useNotifications();
+  const [notifState, setNotifState] = useState(settings);
+
+  useEffect(() => {
+    setNotifState(settings);
+  }, [settings]);
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("activity_token");
+        const result = await apiGet<ProfileResponse>("/users/profile", token);
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const result: ProfileResponse = await response.json();
-
-        if (!response.ok || !result.success) {
+        if (!result.success) {
           throw new Error(result.message || "Failed to fetch profile.");
         }
 
@@ -67,21 +75,17 @@ export default function SettingsPage() {
 
     try {
       const token = localStorage.getItem("activity_token");
+      const result = await apiPatch<ProfileResponse>("/users/profile", profile, token);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/profile`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(profile),
-      });
-
-      const result: ProfileResponse = await response.json();
-
-      if (!response.ok || !result.success) {
+      if (!result.success) {
         throw new Error(result.message || "Failed to update profile.");
       }
+
+      await updateNotificationSettings({
+        remindersEnabled: notifState.remindersEnabled,
+        reminderInterval: notifState.reminderInterval ? Number(notifState.reminderInterval) : null,
+        autoMarkMissedEnabled: notifState.autoMarkMissedEnabled,
+      });
 
       setSuccessMessage(result.message || "Settings updated.");
       localStorage.setItem(
@@ -100,7 +104,7 @@ export default function SettingsPage() {
     }
   };
 
-  if (loading) {
+  if (loading || notifLoading) {
     return (
       <section className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-300">
         Loading settings...
@@ -117,44 +121,71 @@ export default function SettingsPage() {
         </p>
       </div>
 
+      <NotificationPermissionCard />
+      
+      <ReminderStatusCard 
+        remindersEnabled={settings.remindersEnabled}
+        reminderInterval={settings.reminderInterval}
+        totalTrackedTasks={settings.totalTrackedTasks}
+        autoMarkMissedEnabled={settings.autoMarkMissedEnabled}
+      />
+
       <form
         onSubmit={handleSubmit}
         className="grid gap-4 rounded-2xl border border-slate-800 bg-slate-900 p-6"
       >
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">Name</label>
-          <input
-            value={profile.name}
-            onChange={(e) => setProfile((prev) => ({ ...prev, name: e.target.value }))}
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
-          />
-        </div>
+        <h3 className="text-xl font-semibold text-white mb-2">Profile & Preferences</h3>
+        
+        <FormInput
+          label="Name"
+          value={profile.name}
+          onChange={(e) => setProfile((prev) => ({ ...prev, name: e.target.value }))}
+        />
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">Email</label>
-          <input
-            value={email}
-            disabled
-            className="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-500"
-          />
-        </div>
+        <FormInput
+          label="Email"
+          value={email}
+          disabled
+          className="text-slate-500"
+        />
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">
-            Assistant tone
-          </label>
-          <select
-            value={profile.assistantTone}
-            onChange={(e) =>
-              setProfile((prev) => ({ ...prev, assistantTone: e.target.value }))
-            }
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
-          >
-            <option value="MOTIVATIONAL">Motivational</option>
-            <option value="BALANCED">Balanced</option>
-            <option value="STRICT">Strict</option>
-            <option value="SAVAGE">Savage</option>
-          </select>
+        <FormSelect
+          label="Assistant tone"
+          value={profile.assistantTone}
+          onChange={(e) =>
+            setProfile((prev) => ({ ...prev, assistantTone: e.target.value }))
+          }
+          options={[
+            { label: "Motivational", value: "MOTIVATIONAL" },
+            { label: "Balanced", value: "BALANCED" },
+            { label: "Strict", value: "STRICT" },
+            { label: "Savage", value: "SAVAGE" },
+          ]}
+        />
+        
+        <div className="border-t border-slate-800 my-4 pt-4">
+          <h3 className="text-xl font-semibold text-white mb-4">Notification Settings</h3>
+          
+          <FormCheckbox 
+            label="Enable Reminders"
+            checked={notifState.remindersEnabled}
+            onChange={(e) => setNotifState((prev) => ({ ...prev, remindersEnabled: e.target.checked }))}
+            className="mb-4"
+          />
+
+          <FormInput
+            label="Default Reminder Interval (minutes)"
+            type="number"
+            value={notifState.reminderInterval || ""}
+            onChange={(e) => setNotifState((prev) => ({ ...prev, reminderInterval: e.target.value ? Number(e.target.value) : null }))}
+          />
+          
+          <FormCheckbox 
+            label="Auto-mark missed tasks"
+            checked={notifState.autoMarkMissedEnabled}
+            onChange={(e) => setNotifState((prev) => ({ ...prev, autoMarkMissedEnabled: e.target.checked }))}
+            className="mt-4"
+          />
         </div>
 
         {error ? (
@@ -169,13 +200,9 @@ export default function SettingsPage() {
           </div>
         ) : null}
 
-        <button
-          type="submit"
-          disabled={saving}
-          className="rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-400 disabled:opacity-60"
-        >
+        <Button type="submit" disabled={saving}>
           {saving ? "Saving..." : "Save settings"}
-        </button>
+        </Button>
       </form>
     </section>
   );

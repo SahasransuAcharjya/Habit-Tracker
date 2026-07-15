@@ -1,6 +1,10 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import FormInput from "@/components/ui/FormInput";
+import FormTextarea from "@/components/ui/FormTextarea";
+import FormSelect from "@/components/ui/FormSelect";
+import Button from "@/components/ui/Button";
 
 type HabitFormValues = {
   title: string;
@@ -89,87 +93,60 @@ export default function HabitForm({
       </p>
 
       <form onSubmit={handleSubmit} className="mt-5 grid gap-4">
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">
-            Habit title
-          </label>
-          <input
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            placeholder="Morning workout"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-            required
-          />
-        </div>
+        <FormInput
+          label="Habit title"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          placeholder="Morning workout"
+          required
+        />
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">
-            Description
-          </label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="45 minutes cardio and stretching"
-            className="min-h-24 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-          />
-        </div>
+        <FormTextarea
+          label="Description"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="45 minutes cardio and stretching"
+        />
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">
-            Category
-          </label>
-          <input
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            placeholder="Fitness / Study / Health"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-          />
-        </div>
+        <FormInput
+          label="Category"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          placeholder="Fitness / Study / Health"
+        />
 
         <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200">
-              Frequency
-            </label>
-            <select
-              name="frequency"
-              value={formData.frequency}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-            >
-              <option value="DAILY">DAILY</option>
-              <option value="WEEKLY">WEEKLY</option>
-              <option value="CUSTOM">CUSTOM</option>
-            </select>
-          </div>
+          <FormSelect
+            label="Frequency"
+            name="frequency"
+            value={formData.frequency}
+            onChange={handleChange}
+            options={[
+              { label: "DAILY", value: "DAILY" },
+              { label: "WEEKLY", value: "WEEKLY" },
+              { label: "CUSTOM", value: "CUSTOM" },
+            ]}
+          />
 
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200">
-              Reminder time
-            </label>
-            <input
-              name="reminderTime"
-              type="datetime-local"
-              value={formData.reminderTime}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-            />
-          </div>
+          <FormInput
+            label="Reminder time"
+            name="reminderTime"
+            type="datetime-local"
+            value={formData.reminderTime}
+            onChange={handleChange}
+          />
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">
-            Target days
-          </label>
-          <input
+          <FormInput
+            label="Target days"
             name="targetDays"
             value={formData.targetDays}
             onChange={handleChange}
             placeholder="0,1,2,3,4,5,6  (Sun=0 ... Sat=6)"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
           />
           <p className="mt-2 text-xs text-slate-500">
             Example: 1,2,3,4,5 for weekdays.
@@ -182,13 +159,9 @@ export default function HabitForm({
           </div>
         ) : null}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-60"
-        >
+        <Button type="submit" disabled={loading} fullWidth>
           {loading ? "Saving..." : "Save habit"}
-        </button>
+        </Button>
       </form>
     </div>
   );

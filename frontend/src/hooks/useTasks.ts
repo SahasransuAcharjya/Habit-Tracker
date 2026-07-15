@@ -1,25 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { apiGet, apiPost, apiPatch, apiDelete } from "@/lib/api";
 
-export type Task = {
-  id: string;
-  title: string;
-  description?: string | null;
-  category?: string | null;
-  priority?: "LOW" | "MEDIUM" | "HIGH";
-  status?: "PENDING" | "DONE" | "MISSED" | "SKIPPED";
-  startTime?: string | null;
-  endTime?: string | null;
-  reminderInterval?: number | null;
-  recurrenceRule?: string | null;
-};
+import { Task, TaskPriority } from "@/types/task";
 
 type CreateTaskPayload = {
   title: string;
   description: string;
   category: string;
-  priority: "LOW" | "MEDIUM" | "HIGH";
+  priority: TaskPriority;
   startTime: string | null;
   endTime: string | null;
   reminderInterval: number | null;
@@ -50,17 +40,7 @@ export function useTasks() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("/api/tasks", {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to fetch tasks.");
-      }
+      const result = await apiGet<{ data: Task[] }>("/tasks", getToken());
 
       setTasks(result.data || []);
     } catch (err) {
@@ -71,38 +51,14 @@ export function useTasks() {
   }, []);
 
   const createTask = useCallback(async (payload: CreateTaskPayload) => {
-    const response = await fetch("/api/tasks", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken()}`,
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to create task.");
-    }
+    const result = await apiPost<{ data: Task }>("/tasks", payload, getToken());
 
     setTasks((prev) => [result.data, ...prev]);
     return result.data;
   }, []);
 
   const deleteTask = useCallback(async (taskId: string) => {
-    const response = await fetch(`/api/tasks/${taskId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to delete task.");
-    }
+    await apiDelete(`/tasks/${taskId}`, getToken());
 
     setTasks((prev) => prev.filter((task) => task.id !== taskId));
 
@@ -110,18 +66,7 @@ export function useTasks() {
   }, []);
 
   const completeTask = useCallback(async (taskId: string) => {
-    const response = await fetch(`/api/tasks/${taskId}/complete`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to complete task.");
-    }
+    await apiPatch(`/tasks/${taskId}/complete`, undefined, getToken());
 
     setTasks((prev) =>
       prev.map((task) =>
@@ -135,18 +80,7 @@ export function useTasks() {
   }, []);
 
   const skipTask = useCallback(async (taskId: string) => {
-    const response = await fetch(`/api/tasks/${taskId}/skip`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to skip task.");
-    }
+    await apiPatch(`/tasks/${taskId}/skip`, undefined, getToken());
 
     setTasks((prev) =>
       prev.map((task) =>

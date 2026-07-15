@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import { apiPost } from "@/lib/api";
+import FormInput from "@/components/ui/FormInput";
+import Button from "@/components/ui/Button";
 
 type LoginResponse = {
   success: boolean;
@@ -47,17 +50,9 @@ export default function LoginPage() {
     setSuccessMessage("");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const result = await apiPost<LoginResponse>("/auth/login", formData);
 
-      const result: LoginResponse = await response.json();
-
-      if (!response.ok || !result.success) {
+      if (!result.success) {
         throw new Error(result.message || "Login failed.");
       }
 
@@ -86,37 +81,27 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-200">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm outline-none transition focus:border-cyan-500"
-              required
-            />
-          </div>
+          <FormInput
+            label="Email"
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
 
-          <div>
-            <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-200">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter your password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm outline-none transition focus:border-cyan-500"
-              required
-            />
-          </div>
+          <FormInput
+            label="Password"
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
 
           {error ? (
             <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-300">
@@ -130,13 +115,9 @@ export default function LoginPage() {
             </div>
           ) : null}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-60"
-          >
+          <Button type="submit" disabled={loading} fullWidth>
             {loading ? "Logging in..." : "Login"}
-          </button>
+          </Button>
         </form>
 
         <p className="mt-6 text-sm text-slate-400">

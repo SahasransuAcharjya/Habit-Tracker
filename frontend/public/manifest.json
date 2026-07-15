@@ -1,0 +1,17 @@
+{
+  "name": "Activity Assistant",
+  "short_name": "Activity",
+  "description": "A personal accountability assistant for planning, reminders, and daily reports.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

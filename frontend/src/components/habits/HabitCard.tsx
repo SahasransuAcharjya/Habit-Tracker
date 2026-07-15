@@ -1,13 +1,6 @@
-type Habit = {
-  id: string;
-  title: string;
-  description?: string | null;
-  category?: string | null;
-  frequency?: string;
-  targetDays?: number[];
-  reminderTime?: string | null;
-  isActive?: boolean;
-};
+import { Habit } from "@/types/habit";
+import { formatTime } from "@/lib/date";
+import { formatEnumLabel } from "@/lib/utils";
 
 type HabitCardProps = {
   habit: Habit;
@@ -48,7 +41,7 @@ export default function HabitCard({
             </span>
 
             <span className="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">
-              {habit.frequency || "DAILY"}
+              {formatEnumLabel(habit.frequency || "DAILY")}
             </span>
           </div>
 
@@ -65,7 +58,7 @@ export default function HabitCard({
             <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Reminder</p>
               <p className="mt-2 text-sm text-slate-200">
-                {habit.reminderTime ? habit.reminderTime : "Not set"}
+                {formatTime(habit.reminderTime)}
               </p>
             </div>
           </div>

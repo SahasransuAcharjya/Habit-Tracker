@@ -1,6 +1,10 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import FormInput from "@/components/ui/FormInput";
+import FormTextarea from "@/components/ui/FormTextarea";
+import FormSelect from "@/components/ui/FormSelect";
+import Button from "@/components/ui/Button";
 
 type TaskFormValues = {
   title: string;
@@ -99,120 +103,81 @@ export default function TaskForm({
       </p>
 
       <form onSubmit={handleSubmit} className="mt-5 grid gap-4">
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">
-            Task title
-          </label>
-          <input
-            name="title"
-            value={formData.title}
+        <FormInput
+          label="Task title"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          placeholder="Study DSA for 2 hours"
+          required
+        />
+
+        <FormTextarea
+          label="Description"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="Focus on graphs and dynamic programming problems"
+        />
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <FormInput
+            label="Category"
+            name="category"
+            value={formData.category}
             onChange={handleChange}
-            placeholder="Study DSA for 2 hours"
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-            required
+            placeholder="Study / Fitness / Project"
+          />
+
+          <FormSelect
+            label="Priority"
+            name="priority"
+            value={formData.priority}
+            onChange={handleChange}
+            options={[
+              { label: "LOW", value: "LOW" },
+              { label: "MEDIUM", value: "MEDIUM" },
+              { label: "HIGH", value: "HIGH" },
+            ]}
           />
         </div>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">
-            Description
-          </label>
-          <textarea
-            name="description"
-            value={formData.description}
+        <div className="grid gap-4 md:grid-cols-2">
+          <FormInput
+            label="Start time"
+            name="startTime"
+            type="datetime-local"
+            value={formData.startTime}
             onChange={handleChange}
-            placeholder="Focus on graphs and dynamic programming problems"
-            className="min-h-24 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
+          />
+
+          <FormInput
+            label="End time"
+            name="endTime"
+            type="datetime-local"
+            value={formData.endTime}
+            onChange={handleChange}
           />
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200">
-              Category
-            </label>
-            <input
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              placeholder="Study / Fitness / Project"
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-            />
-          </div>
+          <FormInput
+            label="Reminder interval (minutes)"
+            name="reminderInterval"
+            type="number"
+            min="1"
+            value={formData.reminderInterval}
+            onChange={handleChange}
+            placeholder="15"
+          />
 
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200">
-              Priority
-            </label>
-            <select
-              name="priority"
-              value={formData.priority}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-            >
-              <option value="LOW">LOW</option>
-              <option value="MEDIUM">MEDIUM</option>
-              <option value="HIGH">HIGH</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200">
-              Start time
-            </label>
-            <input
-              name="startTime"
-              type="datetime-local"
-              value={formData.startTime}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-            />
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200">
-              End time
-            </label>
-            <input
-              name="endTime"
-              type="datetime-local"
-              value={formData.endTime}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-            />
-          </div>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200">
-              Reminder interval (minutes)
-            </label>
-            <input
-              name="reminderInterval"
-              type="number"
-              min="1"
-              value={formData.reminderInterval}
-              onChange={handleChange}
-              placeholder="15"
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-            />
-          </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200">
-              Recurrence rule
-            </label>
-            <input
-              name="recurrenceRule"
-              value={formData.recurrenceRule}
-              onChange={handleChange}
-              placeholder="Daily / Weekdays / Mon-Wed-Fri"
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
-            />
-          </div>
+          <FormInput
+            label="Recurrence rule"
+            name="recurrenceRule"
+            value={formData.recurrenceRule}
+            onChange={handleChange}
+            placeholder="Daily / Weekdays / Mon-Wed-Fri"
+          />
         </div>
 
         {error ? (
@@ -221,13 +186,9 @@ export default function TaskForm({
           </div>
         ) : null}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-60"
-        >
+        <Button type="submit" disabled={loading} fullWidth>
           {loading ? "Saving..." : "Save task"}
-        </button>
+        </Button>
       </form>
     </div>
   );

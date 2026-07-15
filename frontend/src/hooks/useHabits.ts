@@ -1,17 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { apiGet, apiPost, apiPatch, apiDelete } from "@/lib/api";
 
-export type Habit = {
-  id: string;
-  title: string;
-  description?: string | null;
-  category?: string | null;
-  frequency?: string;
-  targetDays?: number[];
-  reminderTime?: string | null;
-  isActive?: boolean;
-};
+import { Habit } from "@/types/habit";
 
 type CreateHabitPayload = {
   title: string;
@@ -34,17 +26,7 @@ export function useHabits() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("/api/habits", {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to fetch habits.");
-      }
+      const result = await apiGet<{ data: Habit[] }>("/habits", getToken());
 
       setHabits(result.data || []);
     } catch (err) {
@@ -55,57 +37,20 @@ export function useHabits() {
   }, []);
 
   const createHabit = useCallback(async (payload: CreateHabitPayload) => {
-    const response = await fetch("/api/habits", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken()}`,
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to create habit.");
-    }
+    const result = await apiPost<{ data: Habit }>("/habits", payload, getToken());
 
     setHabits((prev) => [result.data, ...prev]);
     return result.data;
   }, []);
 
   const deleteHabit = useCallback(async (habitId: string) => {
-    const response = await fetch(`/api/habits/${habitId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to delete habit.");
-    }
+    await apiDelete(`/habits/${habitId}`, getToken());
 
     setHabits((prev) => prev.filter((habit) => habit.id !== habitId));
   }, []);
 
   const toggleHabitActive = useCallback(async (habitId: string, nextValue: boolean) => {
-    const response = await fetch(`/api/habits/${habitId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken()}`,
-      },
-      body: JSON.stringify({ isActive: nextValue }),
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to update habit.");
-    }
+    await apiPatch(`/habits/${habitId}`, { isActive: nextValue }, getToken());
 
     setHabits((prev) =>
       prev.map((habit) =>

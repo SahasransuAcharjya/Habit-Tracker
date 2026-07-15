@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Button from "@/components/ui/Button";
+import { apiPost } from "@/lib/api";
 
 type NotificationSubscriptionPayload = {
   endpoint: string;
@@ -75,20 +77,10 @@ export default function NotificationPermissionCard() {
       }
 
       const token = localStorage.getItem("activity_token");
+      const result = await apiPost<{ success: boolean; message: string }>("/notifications", subscription as NotificationSubscriptionPayload, token);
 
-      const response = await fetch("/api/notifications", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(subscription as NotificationSubscriptionPayload),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        throw new Error(result.message || "Failed to save notification subscription.");
+      if (!result || ("success" in result && !result.success)) {
+        throw new Error((result as any).message || "Failed to save notification subscription.");
       }
 
       setStatus("Notifications enabled successfully.");
@@ -125,13 +117,13 @@ export default function NotificationPermissionCard() {
         </ul>
       </div>
 
-      <button
+      <Button
         onClick={enableNotifications}
         disabled={loading}
-        className="mt-5 rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-5"
       >
         {loading ? "Enabling..." : "Enable notifications"}
-      </button>
+      </Button>
 
       {status ? (
         <div

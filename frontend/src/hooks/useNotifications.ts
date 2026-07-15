@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { apiGet, apiPatch } from "@/lib/api";
 
 type NotificationSettings = {
   remindersEnabled: boolean;
@@ -26,17 +27,7 @@ export function useNotifications() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("/api/notifications/settings", {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to fetch notification settings.");
-      }
+      const result = await apiGet<{ data: NotificationSettings }>("/notifications/settings", getToken());
 
       setSettings(result.data || settings);
     } catch (err) {
@@ -50,20 +41,7 @@ export function useNotifications() {
 
   const updateNotificationSettings = useCallback(
     async (payload: Partial<NotificationSettings>) => {
-      const response = await fetch("/api/notifications/settings", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to update notification settings.");
-      }
+      await apiPatch("/notifications/settings", payload, getToken());
 
       setSettings((prev) => ({
         ...prev,

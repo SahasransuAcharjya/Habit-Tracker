@@ -2,11 +2,7 @@
 
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from "react";
 
-type User = {
-  id?: string;
-  name?: string;
-  email?: string;
-};
+import { User } from "@/types/user";
 
 type AuthContextType = {
   user: User | null;
@@ -49,6 +45,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = (nextToken: string, nextUser?: User | null) => {
     localStorage.setItem("activity_token", nextToken);
+    document.cookie = `activity_token=${nextToken}; path=/; max-age=604800; samesite=strict`;
     setToken(nextToken);
 
     if (nextUser) {
@@ -60,6 +57,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const logout = () => {
     localStorage.removeItem("activity_token");
     localStorage.removeItem("activity_user");
+    document.cookie = "activity_token=; path=/; max-age=0; samesite=strict";
     setToken(null);
     setUser(null);
   };

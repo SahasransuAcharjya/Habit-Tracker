@@ -1,16 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { apiGet, apiPost } from "@/lib/api";
 
-export type DailyReport = {
-  id?: string;
-  reportDate?: string;
-  score?: number;
-  summary?: string;
-  praiseText?: string;
-  tauntText?: string;
-  motivationText?: string;
-};
+import { Report as DailyReport } from "@/types/report";
 
 export function useReport() {
   const [report, setReport] = useState<DailyReport | null>(null);
@@ -24,17 +17,7 @@ export function useReport() {
       setLoading(true);
       setError("");
 
-      const response = await fetch("/api/reports/today", {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to fetch today report.");
-      }
+      const result = await apiGet<{ data: DailyReport }>("/reports/today", getToken());
 
       setReport(result.data || null);
     } catch (err) {
@@ -45,18 +28,7 @@ export function useReport() {
   }, []);
 
   const generateTodayReport = useCallback(async () => {
-    const response = await fetch("/api/reports/generate", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || "Failed to generate report.");
-    }
+    const result = await apiPost<{ data: DailyReport }>("/reports/generate", undefined, getToken());
 
     setReport(result.data || null);
     return result.data;

@@ -1,13 +1,6 @@
-type Task = {
-  id: string;
-  title: string;
-  description?: string | null;
-  category?: string | null;
-  priority?: "LOW" | "MEDIUM" | "HIGH";
-  status?: "PENDING" | "DONE" | "MISSED" | "SKIPPED";
-  startTime?: string | null;
-  endTime?: string | null;
-};
+import { Task } from "@/types/task";
+import { formatDateTime } from "@/lib/date";
+import { formatEnumLabel } from "@/lib/utils";
 
 type TaskCardProps = {
   task: Task;
@@ -49,7 +42,7 @@ export default function TaskCard({
                 priorityStyles[task.priority || "LOW"]
               }`}
             >
-              {task.priority || "LOW"}
+              {formatEnumLabel(task.priority || "LOW")}
             </span>
 
             <span
@@ -57,7 +50,7 @@ export default function TaskCard({
                 statusStyles[task.status || "PENDING"]
               }`}
             >
-              {task.status || "PENDING"}
+              {formatEnumLabel(task.status || "PENDING")}
             </span>
           </div>
 
@@ -73,12 +66,12 @@ export default function TaskCard({
 
             <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Start</p>
-              <p className="mt-2 text-sm text-slate-200">{task.startTime || "Not set"}</p>
+              <p className="mt-2 text-sm text-slate-200">{formatDateTime(task.startTime)}</p>
             </div>
 
             <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500">End</p>
-              <p className="mt-2 text-sm text-slate-200">{task.endTime || "Not set"}</p>
+              <p className="mt-2 text-sm text-slate-200">{formatDateTime(task.endTime)}</p>
             </div>
           </div>
         </div>

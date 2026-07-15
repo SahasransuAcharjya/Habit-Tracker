@@ -4,6 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import { apiPost } from "@/lib/api";
+import FormInput from "@/components/ui/FormInput";
+import FormSelect from "@/components/ui/FormSelect";
+import Button from "@/components/ui/Button";
 
 type RegisterResponse = {
   success: boolean;
@@ -52,17 +56,9 @@ export default function RegisterPage() {
     setSuccessMessage("");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const result = await apiPost<RegisterResponse>("/auth/register", formData);
 
-      const result: RegisterResponse = await response.json();
-
-      if (!response.ok || !result.success) {
+      if (!result.success) {
         throw new Error(result.message || "Registration failed.");
       }
 
@@ -91,74 +87,52 @@ export default function RegisterPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="name" className="mb-2 block text-sm font-medium text-slate-200">
-              Name
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              placeholder="Your name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm outline-none transition focus:border-cyan-500"
-              required
-            />
-          </div>
+          <FormInput
+            label="Name"
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Your name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
 
-          <div>
-            <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-200">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm outline-none transition focus:border-cyan-500"
-              required
-            />
-          </div>
+          <FormInput
+            label="Email"
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
 
-          <div>
-            <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-200">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Create a password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm outline-none transition focus:border-cyan-500"
-              required
-            />
-          </div>
+          <FormInput
+            label="Password"
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Create a password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
 
-          <div>
-            <label
-              htmlFor="assistantTone"
-              className="mb-2 block text-sm font-medium text-slate-200"
-            >
-              Assistant tone
-            </label>
-            <select
-              id="assistantTone"
-              name="assistantTone"
-              value={formData.assistantTone}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm outline-none transition focus:border-cyan-500"
-            >
-              <option value="MOTIVATIONAL">Motivational</option>
-              <option value="BALANCED">Balanced</option>
-              <option value="STRICT">Strict</option>
-              <option value="SAVAGE">Savage</option>
-            </select>
-          </div>
+          <FormSelect
+            label="Assistant tone"
+            id="assistantTone"
+            name="assistantTone"
+            value={formData.assistantTone}
+            onChange={handleChange}
+            options={[
+              { label: "Motivational", value: "MOTIVATIONAL" },
+              { label: "Balanced", value: "BALANCED" },
+              { label: "Strict", value: "STRICT" },
+              { label: "Savage", value: "SAVAGE" },
+            ]}
+          />
 
           {error ? (
             <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-300">
@@ -172,13 +146,9 @@ export default function RegisterPage() {
             </div>
           ) : null}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-60"
-          >
+          <Button type="submit" disabled={loading} fullWidth>
             {loading ? "Creating account..." : "Create account"}
-          </button>
+          </Button>
         </form>
 
         <p className="mt-6 text-sm text-slate-400">

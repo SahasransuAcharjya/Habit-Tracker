@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { AuthProvider } from "@/context/AuthContext";
 import { AppProvider } from "@/context/AppContext";
@@ -9,10 +9,20 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#020617",
+};
+
 export const metadata: Metadata = {
   title: "Activity Assistant",
   description: "A personal accountability assistant for planning, reminders, and daily reports.",
   applicationName: "Activity Assistant",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Activity Assistant",
+  },
 };
 
 export default function RootLayout({
