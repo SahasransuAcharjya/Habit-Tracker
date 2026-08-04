@@ -62,7 +62,7 @@ export default function HabitsPage() {
         </div>
 
         <div>
-          <HabitForm onSubmit={createHabit} loading={loading} />
+          <HabitForm onSubmit={async (values) => { await createHabit(values); }} loading={loading} />
         </div>
       </div>
     </section>

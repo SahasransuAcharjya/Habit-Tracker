@@ -36,7 +36,7 @@ export default function TodayPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <h3 className="text-xl font-semibold">Today's tasks</h3>
+              <h3 className="text-xl font-semibold">Today&apos;s tasks</h3>
               <p className="text-sm text-slate-400">Your active plan for the day.</p>
             </div>
             <Link href="/tasks" className="text-sm text-cyan-400 hover:text-cyan-300">
@@ -66,7 +66,7 @@ export default function TodayPage() {
 
         <div className="space-y-4">
           <div>
-            <h3 className="text-xl font-semibold">Today's report snapshot</h3>
+            <h3 className="text-xl font-semibold">Today&apos;s report snapshot</h3>
             <p className="text-sm text-slate-400">Quick view of your current standing.</p>
           </div>
 

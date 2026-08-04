@@ -23,7 +23,7 @@ type HabitFormProps = {
     frequency: string;
     targetDays: number[];
     reminderTime: string | null;
-  }) => Promise<any> | any;
+  }) => Promise<void> | void;
   loading?: boolean;
 };
 

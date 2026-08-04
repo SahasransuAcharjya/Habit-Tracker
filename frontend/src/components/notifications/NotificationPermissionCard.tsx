@@ -80,7 +80,7 @@ export default function NotificationPermissionCard() {
       const result = await apiPost<{ success: boolean; message: string }>("/notifications", subscription as unknown as NotificationSubscriptionPayload, token);
 
       if (!result || ("success" in result && !result.success)) {
-        throw new Error((result as any).message || "Failed to save notification subscription.");
+        throw new Error((result as Record<string, unknown>).message as string || "Failed to save notification subscription.");
       }
 
       setStatus("Notifications enabled successfully.");
