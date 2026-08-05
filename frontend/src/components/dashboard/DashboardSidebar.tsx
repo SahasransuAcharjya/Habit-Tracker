@@ -49,7 +49,7 @@ export default function DashboardSidebar({
               href={item.href}
               className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition ${
                 isActive
-                  ? "bg-red-500 font-semibold text-slate-950"
+                  ? "bg-red-500 font-semibold text-white"
                   : "text-stone-600 hover:bg-stone-100 hover:text-stone-800"
               }`}
             >

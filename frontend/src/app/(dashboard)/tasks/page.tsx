@@ -41,7 +41,7 @@ export default function TasksPage() {
 
         <Link
           href="/tasks/create"
-          className="shrink-0 rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-red-400"
+          className="shrink-0 rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-400"
         >
           + Create task
         </Link>

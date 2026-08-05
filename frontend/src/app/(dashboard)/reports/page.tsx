@@ -21,7 +21,7 @@ export default function ReportsPage() {
         <button
           onClick={() => generateTodayReport()}
           disabled={loading}
-          className="rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-red-400 disabled:opacity-60"
+          className="rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-400 disabled:opacity-60"
         >
           {loading ? "Generating..." : "Generate report"}
         </button>

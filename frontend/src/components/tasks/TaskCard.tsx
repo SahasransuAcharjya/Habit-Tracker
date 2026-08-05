@@ -89,7 +89,7 @@ export default function TaskCard({
           {task.status === "PENDING" && onComplete ? (
             <button
               onClick={() => onComplete(task.id)}
-              className="rounded-xl bg-sky-500 px-3 py-2 text-sm font-medium text-slate-950 transition hover:bg-sky-400"
+              className="rounded-xl bg-sky-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-sky-400"
             >
               Complete
             </button>
@@ -98,7 +98,7 @@ export default function TaskCard({
           {task.status === "PENDING" && onSkip ? (
             <button
               onClick={() => onSkip(task.id)}
-              className="rounded-xl bg-amber-500 px-3 py-2 text-sm font-medium text-slate-950 transition hover:bg-amber-400"
+              className="rounded-xl bg-amber-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-amber-400"
             >
               Skip
             </button>

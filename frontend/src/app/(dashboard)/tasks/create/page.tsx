@@ -220,7 +220,7 @@ export default function CreateTaskPage() {
         <button
           type="submit"
           disabled={loading}
-          className="rounded-xl bg-red-500 px-4 py-3 text-sm font-semibold text-slate-950 hover:bg-red-400 disabled:opacity-60"
+          className="rounded-xl bg-red-500 px-4 py-3 text-sm font-semibold text-white hover:bg-red-400 disabled:opacity-60"
         >
           {loading ? "Creating..." : "Create task"}
         </button>

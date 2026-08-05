@@ -22,7 +22,7 @@ export default function HomePage() {
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/register"
-              className="rounded-xl bg-red-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-red-400"
+              className="rounded-xl bg-red-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-400"
             >
               Get started
             </Link>

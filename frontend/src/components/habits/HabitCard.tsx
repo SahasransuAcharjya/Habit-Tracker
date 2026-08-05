@@ -88,8 +88,8 @@ export default function HabitCard({
               onClick={() => onToggleActive(habit.id, !habit.isActive)}
               className={`rounded-xl px-3 py-2 text-sm font-medium transition ${
                 habit.isActive
-                  ? "bg-amber-500 text-slate-950 hover:bg-amber-400"
-                  : "bg-sky-500 text-slate-950 hover:bg-sky-400"
+                  ? "bg-amber-500 text-white hover:bg-amber-400"
+                  : "bg-sky-500 text-white hover:bg-sky-400"
               }`}
             >
               {habit.isActive ? "Pause" : "Activate"}

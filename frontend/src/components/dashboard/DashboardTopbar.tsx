@@ -25,7 +25,7 @@ export default function DashboardTopbar({
 
         <Link
           href={actionHref}
-          className="rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-red-400"
+          className="rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-400"
         >
           {actionLabel}
         </Link>
