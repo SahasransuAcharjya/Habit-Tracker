@@ -30,6 +30,7 @@ export default function RegisterPage() {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
     assistantTone: "BALANCED",
   });
 
@@ -55,8 +56,15 @@ export default function RegisterPage() {
     setError("");
     setSuccessMessage("");
 
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const result = await apiPost<RegisterResponse>("/auth/register", formData);
+      const { confirmPassword, ...payload } = formData;
+      const result = await apiPost<RegisterResponse>("/auth/register", payload);
 
       if (!result.success) {
         throw new Error(result.message || "Registration failed.");
@@ -116,6 +124,17 @@ export default function RegisterPage() {
             type="password"
             placeholder="Create a password"
             value={formData.password}
+            onChange={handleChange}
+            required
+          />
+
+          <FormInput
+            label="Confirm Password"
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm your password"
+            value={formData.confirmPassword}
             onChange={handleChange}
             required
           />
