@@ -13,11 +13,11 @@ export default function FormTextarea({
 }: FormTextareaProps) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium text-slate-200">
+      <label className="mb-2 block text-sm font-medium text-stone-700">
         {label}
       </label>
       <textarea
-        className={`min-h-24 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500 ${className}`}
+        className={`min-h-24 w-full rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm text-stone-800 outline-none transition focus:border-red-500 ${className}`}
         {...props}
       />
       {error ? <p className="mt-2 text-xs text-red-300">{error}</p> : null}

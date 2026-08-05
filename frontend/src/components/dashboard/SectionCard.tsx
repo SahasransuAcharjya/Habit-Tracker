@@ -15,12 +15,12 @@ export default function SectionCard({
 }: SectionCardProps) {
   return (
     <section
-      className={`rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-lg ${className}`}
+      className={`rounded-2xl border border-stone-200 bg-white p-5 shadow-lg ${className}`}
     >
       {title ? (
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-white">{title}</h3>
-          {subtitle ? <p className="mt-1 text-sm text-slate-400">{subtitle}</p> : null}
+          <h3 className="text-lg font-semibold text-stone-800">{title}</h3>
+          {subtitle ? <p className="mt-1 text-sm text-stone-500">{subtitle}</p> : null}
         </div>
       ) : null}
 

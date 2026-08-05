@@ -6,8 +6,8 @@ type ReportFeedbackCardProps = {
 
 const toneStyles = {
   praise: {
-    wrapper: "border-emerald-800 bg-emerald-950/30",
-    title: "text-emerald-300",
+    wrapper: "border-emerald-800 bg-sky-50/30",
+    title: "text-sky-600",
     text: "text-emerald-100",
   },
   warning: {
@@ -16,8 +16,8 @@ const toneStyles = {
     text: "text-amber-100",
   },
   motivation: {
-    wrapper: "border-cyan-800 bg-cyan-950/30",
-    title: "text-cyan-300",
+    wrapper: "border-cyan-800 bg-red-50/30",
+    title: "text-red-600",
     text: "text-cyan-100",
   },
 };

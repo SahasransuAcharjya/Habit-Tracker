@@ -23,16 +23,16 @@ export default function TaskFilters({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-lg">
+    <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-lg">
       <div className="grid gap-4 md:grid-cols-3">
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">
+          <label className="mb-2 block text-sm font-medium text-stone-700">
             Status
           </label>
           <select
             value={filters.status}
             onChange={(e) => updateField("status", e.target.value)}
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
+            className="w-full rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm text-stone-800 outline-none transition focus:border-red-500"
           >
             <option value="">All</option>
             <option value="PENDING">Pending</option>
@@ -43,13 +43,13 @@ export default function TaskFilters({
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">
+          <label className="mb-2 block text-sm font-medium text-stone-700">
             Priority
           </label>
           <select
             value={filters.priority}
             onChange={(e) => updateField("priority", e.target.value)}
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
+            className="w-full rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm text-stone-800 outline-none transition focus:border-red-500"
           >
             <option value="">All</option>
             <option value="LOW">Low</option>
@@ -59,14 +59,14 @@ export default function TaskFilters({
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-200">
+          <label className="mb-2 block text-sm font-medium text-stone-700">
             Category
           </label>
           <input
             value={filters.category}
             onChange={(e) => updateField("category", e.target.value)}
             placeholder="Study, Fitness, Work..."
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500"
+            className="w-full rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm text-stone-800 outline-none transition focus:border-red-500"
           />
         </div>
       </div>

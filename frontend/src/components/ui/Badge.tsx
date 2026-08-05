@@ -19,12 +19,12 @@ type BadgeProps = {
 };
 
 const variantClasses: Record<BadgeVariant, string> = {
-  default: "bg-slate-800 text-slate-200",
-  success: "bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-500/20",
+  default: "bg-stone-100 text-stone-700",
+  success: "bg-sky-500/15 text-sky-600 ring-1 ring-sky-500/20",
   warning: "bg-amber-500/15 text-amber-300 ring-1 ring-amber-500/20",
   danger: "bg-red-500/15 text-red-300 ring-1 ring-red-500/20",
-  info: "bg-cyan-500/15 text-cyan-300 ring-1 ring-cyan-500/20",
-  outline: "border border-slate-700 bg-transparent text-slate-200",
+  info: "bg-red-500/15 text-red-600 ring-1 ring-red-500/20",
+  outline: "border border-stone-300 bg-transparent text-stone-700",
 };
 
 const sizeClasses: Record<BadgeSize, string> = {
@@ -35,10 +35,10 @@ const sizeClasses: Record<BadgeSize, string> = {
 
 const dotClasses: Record<BadgeVariant, string> = {
   default: "bg-slate-300",
-  success: "bg-emerald-300",
+  success: "bg-sky-600",
   warning: "bg-amber-300",
   danger: "bg-red-300",
-  info: "bg-cyan-300",
+  info: "bg-red-600",
   outline: "bg-slate-300",
 };
 

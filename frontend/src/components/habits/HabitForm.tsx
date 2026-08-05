@@ -86,9 +86,9 @@ export default function HabitForm({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-lg">
-      <h3 className="text-xl font-semibold text-white">Create habit</h3>
-      <p className="mt-1 text-sm text-slate-400">
+    <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-lg">
+      <h3 className="text-xl font-semibold text-stone-800">Create habit</h3>
+      <p className="mt-1 text-sm text-stone-500">
         Add a recurring routine you want to track every week.
       </p>
 
@@ -148,7 +148,7 @@ export default function HabitForm({
             onChange={handleChange}
             placeholder="0,1,2,3,4,5,6  (Sun=0 ... Sat=6)"
           />
-          <p className="mt-2 text-xs text-slate-500">
+          <p className="mt-2 text-xs text-stone-400">
             Example: 1,2,3,4,5 for weekdays.
           </p>
         </div>

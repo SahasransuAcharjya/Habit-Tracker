@@ -12,11 +12,11 @@ export default function ReminderStatusCard({
   autoMarkMissedEnabled = true,
 }: ReminderStatusCardProps) {
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-lg">
+    <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-lg">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Reminder status</p>
-          <h3 className="mt-2 text-lg font-semibold text-white">
+          <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Reminder status</p>
+          <h3 className="mt-2 text-lg font-semibold text-stone-800">
             {remindersEnabled ? "Active reminders" : "Reminders disabled"}
           </h3>
         </div>
@@ -24,8 +24,8 @@ export default function ReminderStatusCard({
         <span
           className={`rounded-full px-3 py-1 text-xs font-medium ${
             remindersEnabled
-              ? "bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-500/25"
-              : "bg-slate-800 text-slate-300"
+              ? "bg-sky-500/15 text-sky-600 ring-1 ring-sky-500/25"
+              : "bg-stone-100 text-stone-600"
           }`}
         >
           {remindersEnabled ? "Enabled" : "Disabled"}
@@ -33,27 +33,27 @@ export default function ReminderStatusCard({
       </div>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Interval</p>
-          <p className="mt-2 text-sm text-slate-200">
+        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Interval</p>
+          <p className="mt-2 text-sm text-stone-700">
             {reminderInterval ? `${reminderInterval} min` : "Not set"}
           </p>
         </div>
 
-        <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Tracked tasks</p>
-          <p className="mt-2 text-sm text-slate-200">{totalTrackedTasks}</p>
+        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Tracked tasks</p>
+          <p className="mt-2 text-sm text-stone-700">{totalTrackedTasks}</p>
         </div>
 
-        <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Auto missed</p>
-          <p className="mt-2 text-sm text-slate-200">
+        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Auto missed</p>
+          <p className="mt-2 text-sm text-stone-700">
             {autoMarkMissedEnabled ? "Enabled" : "Disabled"}
           </p>
         </div>
       </div>
 
-      <p className="mt-4 text-sm text-slate-400">
+      <p className="mt-4 text-sm text-stone-500">
         Pending tasks can keep reminding you until you complete them or the time window expires.
       </p>
     </div>

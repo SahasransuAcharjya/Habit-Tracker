@@ -34,14 +34,14 @@ export default function TasksPage() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-2xl font-bold">Tasks</h2>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-stone-500">
             Manage one-time and recurring work for the day.
           </p>
         </div>
 
         <Link
           href="/tasks/create"
-          className="shrink-0 rounded-xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400"
+          className="shrink-0 rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-red-400"
         >
           + Create task
         </Link>

@@ -28,7 +28,7 @@ export default function HabitsPage() {
     <section className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold">Habits</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-stone-500">
           Track recurring routines like workouts, study, and reading.
         </p>
       </div>
@@ -44,7 +44,7 @@ export default function HabitsPage() {
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-4">
           {habits.length === 0 ? (
-            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-300">
+            <div className="rounded-2xl border border-stone-200 bg-white p-6 text-stone-600">
               No habits found yet. Start by creating one.
             </div>
           ) : (

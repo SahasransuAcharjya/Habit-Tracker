@@ -106,7 +106,7 @@ export default function SettingsPage() {
 
   if (loading || notifLoading) {
     return (
-      <section className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-300">
+      <section className="rounded-2xl border border-stone-200 bg-white p-6 text-stone-600">
         Loading settings...
       </section>
     );
@@ -116,7 +116,7 @@ export default function SettingsPage() {
     <section className="max-w-2xl space-y-6">
       <div>
         <h2 className="text-2xl font-bold">Settings</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-stone-500">
           Adjust your profile and assistant tone.
         </p>
       </div>
@@ -132,9 +132,9 @@ export default function SettingsPage() {
 
       <form
         onSubmit={handleSubmit}
-        className="grid gap-4 rounded-2xl border border-slate-800 bg-slate-900 p-6"
+        className="grid gap-4 rounded-2xl border border-stone-200 bg-white p-6"
       >
-        <h3 className="text-xl font-semibold text-white mb-2">Profile & Preferences</h3>
+        <h3 className="text-xl font-semibold text-stone-800 mb-2">Profile & Preferences</h3>
         
         <FormInput
           label="Name"
@@ -146,7 +146,7 @@ export default function SettingsPage() {
           label="Email"
           value={email}
           disabled
-          className="text-slate-500"
+          className="text-stone-400"
         />
 
         <FormSelect
@@ -163,8 +163,8 @@ export default function SettingsPage() {
           ]}
         />
         
-        <div className="border-t border-slate-800 my-4 pt-4">
-          <h3 className="text-xl font-semibold text-white mb-4">Notification Settings</h3>
+        <div className="border-t border-stone-200 my-4 pt-4">
+          <h3 className="text-xl font-semibold text-stone-800 mb-4">Notification Settings</h3>
           
           <FormCheckbox 
             label="Enable Reminders"
@@ -195,7 +195,7 @@ export default function SettingsPage() {
         ) : null}
 
         {successMessage ? (
-          <div className="rounded-xl border border-emerald-800 bg-emerald-950/40 px-4 py-3 text-sm text-emerald-300">
+          <div className="rounded-xl border border-emerald-800 bg-sky-50/40 px-4 py-3 text-sm text-sky-600">
             {successMessage}
           </div>
         ) : null}

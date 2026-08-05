@@ -37,9 +37,9 @@ export default function TodayPage() {
           <div className="flex items-center justify-between gap-4">
             <div>
               <h3 className="text-xl font-semibold">Today&apos;s tasks</h3>
-              <p className="text-sm text-slate-400">Your active plan for the day.</p>
+              <p className="text-sm text-stone-500">Your active plan for the day.</p>
             </div>
-            <Link href="/tasks" className="text-sm text-cyan-400 hover:text-cyan-300">
+            <Link href="/tasks" className="text-sm text-red-400 hover:text-red-600">
               View all
             </Link>
           </div>
@@ -47,7 +47,7 @@ export default function TodayPage() {
           {tasksLoading ? (
             <PageLoader text="Loading tasks..." />
           ) : todayTasks.length === 0 ? (
-             <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-300">
+             <div className="rounded-2xl border border-stone-200 bg-white p-6 text-stone-600">
                 No tasks found for now. Start by creating one.
              </div>
           ) : (
@@ -67,13 +67,13 @@ export default function TodayPage() {
         <div className="space-y-4">
           <div>
             <h3 className="text-xl font-semibold">Today&apos;s report snapshot</h3>
-            <p className="text-sm text-slate-400">Quick view of your current standing.</p>
+            <p className="text-sm text-stone-500">Quick view of your current standing.</p>
           </div>
 
           {reportLoading ? (
             <PageLoader text="Loading report..." />
           ) : !report ? (
-             <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-300">
+             <div className="rounded-2xl border border-stone-200 bg-white p-6 text-stone-600">
                 No report generated yet. It will appear after report generation.
              </div>
           ) : (

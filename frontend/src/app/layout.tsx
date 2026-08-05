@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-slate-950 font-sans text-white antialiased">
+      <body className="min-h-screen bg-[#fdfaf6] font-sans text-stone-800 antialiased">
         <AuthProvider>
           <AppProvider>
             {children}

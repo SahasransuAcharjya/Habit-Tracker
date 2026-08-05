@@ -29,13 +29,13 @@ export default function DashboardSidebar({
   };
 
   return (
-    <aside className="hidden min-h-screen w-72 border-r border-slate-800 bg-slate-900/80 p-6 lg:block">
+    <aside className="hidden min-h-screen w-72 border-r border-stone-200 bg-white/80 p-6 lg:block">
       <div className="mb-8">
-        <p className="text-sm uppercase tracking-[0.2em] text-cyan-400">
+        <p className="text-sm uppercase tracking-[0.2em] text-red-400">
           Activity Assistant
         </p>
-        <h2 className="mt-3 text-2xl font-bold text-white">Stay accountable</h2>
-        <p className="mt-2 text-sm text-slate-400">Welcome back, {userName}.</p>
+        <h2 className="mt-3 text-2xl font-bold text-stone-800">Stay accountable</h2>
+        <p className="mt-2 text-sm text-stone-500">Welcome back, {userName}.</p>
       </div>
 
       <nav className="space-y-2">
@@ -49,8 +49,8 @@ export default function DashboardSidebar({
               href={item.href}
               className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition ${
                 isActive
-                  ? "bg-cyan-500 font-semibold text-slate-950"
-                  : "text-slate-300 hover:bg-slate-800 hover:text-white"
+                  ? "bg-red-500 font-semibold text-slate-950"
+                  : "text-stone-600 hover:bg-stone-100 hover:text-stone-800"
               }`}
             >
               <span className="text-base">{item.icon}</span>
@@ -60,16 +60,16 @@ export default function DashboardSidebar({
         })}
       </nav>
 
-      <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-950 p-4">
-        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Mindset</p>
-        <p className="mt-2 text-sm text-slate-300">
+      <div className="mt-8 rounded-2xl border border-stone-200 bg-[#fdfaf6] p-4">
+        <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Mindset</p>
+        <p className="mt-2 text-sm text-stone-600">
           Your results tomorrow depend on the excuses you reject today.
         </p>
       </div>
 
       <button
         onClick={handleLogout}
-        className="mt-6 w-full rounded-xl border border-slate-700 px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-slate-800"
+        className="mt-6 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm font-medium text-stone-700 transition hover:bg-stone-100"
       >
         Logout
       </button>

@@ -94,23 +94,23 @@ export default function NotificationPermissionCard() {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-lg">
+    <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-lg">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-cyan-400">Notifications</p>
-          <h3 className="mt-2 text-lg font-semibold text-white">Enable reminders</h3>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="text-xs uppercase tracking-[0.2em] text-red-400">Notifications</p>
+          <h3 className="mt-2 text-lg font-semibold text-stone-800">Enable reminders</h3>
+          <p className="mt-2 text-sm text-stone-500">
             Allow push notifications so the app can remind you about pending tasks.
           </p>
         </div>
 
-        <div className="rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-300">
+        <div className="rounded-full bg-red-500/10 px-3 py-1 text-xs font-medium text-red-600">
           Push
         </div>
       </div>
 
-      <div className="mt-5 rounded-xl border border-slate-800 bg-slate-950 p-4">
-        <ul className="space-y-2 text-sm text-slate-300">
+      <div className="mt-5 rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
+        <ul className="space-y-2 text-sm text-stone-600">
           <li>- Repeated reminders for pending tasks.</li>
           <li>- Better support for your Android install flow later.</li>
           <li>- Required for your personal assistant behavior.</li>
@@ -129,7 +129,7 @@ export default function NotificationPermissionCard() {
         <div
           className={`mt-4 rounded-xl px-4 py-3 text-sm ${
             statusType === "success"
-              ? "border border-emerald-800 bg-emerald-950/40 text-emerald-300"
+              ? "border border-emerald-800 bg-sky-50/40 text-sky-600"
               : "border border-red-800 bg-red-950/40 text-red-300"
           }`}
         >

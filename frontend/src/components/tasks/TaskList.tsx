@@ -28,7 +28,7 @@ export default function TaskList({
 }: TaskListProps) {
   if (!tasks.length) {
     return (
-      <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-center text-sm text-slate-400">
+      <div className="rounded-2xl border border-stone-200 bg-white p-6 text-center text-sm text-stone-500">
         No tasks found for the selected filters.
       </div>
     );

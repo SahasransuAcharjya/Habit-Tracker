@@ -13,7 +13,7 @@ export default function ReportsPage() {
       <div className="flex items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold">Today&apos;s report</h2>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-stone-500">
             Review your performance and get honest feedback.
           </p>
         </div>
@@ -21,7 +21,7 @@ export default function ReportsPage() {
         <button
           onClick={() => generateTodayReport()}
           disabled={loading}
-          className="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400 disabled:opacity-60"
+          className="rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-red-400 disabled:opacity-60"
         >
           {loading ? "Generating..." : "Generate report"}
         </button>
@@ -32,7 +32,7 @@ export default function ReportsPage() {
       {loading ? (
         <PageLoader text="Loading report..." />
       ) : !report ? (
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-300">
+        <div className="rounded-2xl border border-stone-200 bg-white p-6 text-stone-600">
           No report available yet. Click generate to create one.
         </div>
       ) : (

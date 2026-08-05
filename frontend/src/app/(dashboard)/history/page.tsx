@@ -40,29 +40,29 @@ export default function HistoryPage() {
     <section className="space-y-8">
       <div>
         <h2 className="text-2xl font-bold">History</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-stone-500">
           Review your past tasks and daily report summaries.
         </p>
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold border-b border-slate-800 pb-2">Past Reports</h3>
+        <h3 className="text-xl font-semibold border-b border-stone-200 pb-2">Past Reports</h3>
         <ErrorMessage message={reportsError} />
         {reportsLoading ? (
           <PageLoader text="Loading past reports..." />
         ) : reports.length === 0 ? (
-          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-300">
+          <div className="rounded-2xl border border-stone-200 bg-white p-6 text-stone-600">
             No past reports found.
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2">
             {reports.map((r) => (
-              <div key={r.id} className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+              <div key={r.id} className="rounded-2xl border border-stone-200 bg-white p-5">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="font-semibold text-slate-200">{r.reportDate}</span>
-                  <span className="text-cyan-400 font-bold">Score: {r.score}</span>
+                  <span className="font-semibold text-stone-700">{r.reportDate}</span>
+                  <span className="text-red-400 font-bold">Score: {r.score}</span>
                 </div>
-                <p className="text-sm text-slate-400">{r.summary}</p>
+                <p className="text-sm text-stone-500">{r.summary}</p>
               </div>
             ))}
           </div>
@@ -70,12 +70,12 @@ export default function HistoryPage() {
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold border-b border-slate-800 pb-2">Task History</h3>
+        <h3 className="text-xl font-semibold border-b border-stone-200 pb-2">Task History</h3>
         <ErrorMessage message={tasksError} />
         {tasksLoading ? (
           <PageLoader text="Loading past tasks..." />
         ) : historyTasks.length === 0 ? (
-          <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-300">
+          <div className="rounded-2xl border border-stone-200 bg-white p-6 text-stone-600">
             No completed, missed, or skipped tasks found.
           </div>
         ) : (

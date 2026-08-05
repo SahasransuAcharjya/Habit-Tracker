@@ -70,12 +70,12 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
+    <main className="min-h-screen bg-[#fdfaf6] text-stone-800 flex items-center justify-center px-4 py-10">
+      <div className="w-full max-w-md rounded-2xl border border-stone-200 bg-white p-6 shadow-2xl">
         <div className="mb-6">
-          <p className="text-sm uppercase tracking-[0.2em] text-cyan-400">Activity Assistant</p>
+          <p className="text-sm uppercase tracking-[0.2em] text-red-400">Activity Assistant</p>
           <h1 className="mt-2 text-3xl font-bold">Login</h1>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-stone-500">
             Continue to your dashboard and track your day properly.
           </p>
         </div>
@@ -110,7 +110,7 @@ export default function LoginPage() {
           ) : null}
 
           {successMessage ? (
-            <div className="rounded-xl border border-emerald-800 bg-emerald-950/50 px-4 py-3 text-sm text-emerald-300">
+            <div className="rounded-xl border border-emerald-800 bg-sky-50/50 px-4 py-3 text-sm text-sky-600">
               {successMessage}
             </div>
           ) : null}
@@ -120,9 +120,9 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        <p className="mt-6 text-sm text-slate-400">
+        <p className="mt-6 text-sm text-stone-500">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="font-medium text-cyan-400 hover:text-cyan-300">
+          <Link href="/register" className="font-medium text-red-400 hover:text-red-600">
             Register
           </Link>
         </p>

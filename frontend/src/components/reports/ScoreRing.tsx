@@ -17,7 +17,7 @@ export default function ScoreRing({
 
   const toneClass =
     normalizedScore >= 75
-      ? "text-emerald-400"
+      ? "text-sky-400"
       : normalizedScore >= 45
       ? "text-amber-400"
       : "text-red-400";
@@ -49,8 +49,8 @@ export default function ScoreRing({
       </svg>
 
       <div className="absolute flex flex-col items-center justify-center">
-        <span className="text-3xl font-bold text-white">{normalizedScore}</span>
-        <span className="text-xs uppercase tracking-[0.2em] text-slate-400">
+        <span className="text-3xl font-bold text-stone-800">{normalizedScore}</span>
+        <span className="text-xs uppercase tracking-[0.2em] text-stone-500">
           Score
         </span>
       </div>

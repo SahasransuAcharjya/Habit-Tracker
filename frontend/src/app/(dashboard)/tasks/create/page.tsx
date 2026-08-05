@@ -83,7 +83,7 @@ export default function CreateTaskPage() {
     <section className="max-w-3xl space-y-6">
       <div>
         <h2 className="text-2xl font-bold">Create task</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-stone-500">
           Add a task, set reminders, and define the deadline window.
         </p>
       </div>
@@ -96,14 +96,14 @@ export default function CreateTaskPage() {
 
       <form
         onSubmit={handleSubmit}
-        className="grid gap-4 rounded-2xl border border-slate-800 bg-slate-900 p-6"
+        className="grid gap-4 rounded-2xl border border-stone-200 bg-white p-6"
       >
         <input
           name="title"
           placeholder="Task title"
           value={formData.title}
           onChange={handleChange}
-          className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
+          className="rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm"
           required
         />
 
@@ -112,7 +112,7 @@ export default function CreateTaskPage() {
           placeholder="Description"
           value={formData.description}
           onChange={handleChange}
-          className="min-h-28 rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
+          className="min-h-28 rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm"
         />
 
         <input
@@ -120,7 +120,7 @@ export default function CreateTaskPage() {
           placeholder="Category"
           value={formData.category}
           onChange={handleChange}
-          className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
+          className="rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm"
         />
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -128,7 +128,7 @@ export default function CreateTaskPage() {
             name="type"
             value={formData.type}
             onChange={handleChange}
-            className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
+            className="rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm"
           >
             <option value="ONE_TIME">ONE_TIME</option>
             <option value="RECURRING">RECURRING</option>
@@ -138,7 +138,7 @@ export default function CreateTaskPage() {
             name="priority"
             value={formData.priority}
             onChange={handleChange}
-            className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
+            className="rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm"
           >
             <option value="LOW">LOW</option>
             <option value="MEDIUM">MEDIUM</option>
@@ -152,21 +152,21 @@ export default function CreateTaskPage() {
             type="datetime-local"
             value={formData.dueDate}
             onChange={handleChange}
-            className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
+            className="rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm"
           />
           <input
             name="startTime"
             type="datetime-local"
             value={formData.startTime}
             onChange={handleChange}
-            className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
+            className="rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm"
           />
           <input
             name="endTime"
             type="datetime-local"
             value={formData.endTime}
             onChange={handleChange}
-            className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
+            className="rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm"
           />
         </div>
 
@@ -175,7 +175,7 @@ export default function CreateTaskPage() {
           placeholder="Recurrence days e.g. 1,2,3,4,5"
           value={formData.recurrenceDays}
           onChange={handleChange}
-          className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
+          className="rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm"
         />
 
         <input
@@ -184,10 +184,10 @@ export default function CreateTaskPage() {
           placeholder="Reminder interval in minutes"
           value={formData.reminderInterval}
           onChange={handleChange}
-          className="rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm"
+          className="rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm"
         />
 
-        <label className="flex items-center gap-3 text-sm text-slate-300">
+        <label className="flex items-center gap-3 text-sm text-stone-600">
           <input
             type="checkbox"
             name="isRecurring"
@@ -197,7 +197,7 @@ export default function CreateTaskPage() {
           Is recurring
         </label>
 
-        <label className="flex items-center gap-3 text-sm text-slate-300">
+        <label className="flex items-center gap-3 text-sm text-stone-600">
           <input
             type="checkbox"
             name="reminderEnabled"
@@ -207,7 +207,7 @@ export default function CreateTaskPage() {
           Enable reminders
         </label>
 
-        <label className="flex items-center gap-3 text-sm text-slate-300">
+        <label className="flex items-center gap-3 text-sm text-stone-600">
           <input
             type="checkbox"
             name="autoMarkMissed"
@@ -220,7 +220,7 @@ export default function CreateTaskPage() {
         <button
           type="submit"
           disabled={loading}
-          className="rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-400 disabled:opacity-60"
+          className="rounded-xl bg-red-500 px-4 py-3 text-sm font-semibold text-slate-950 hover:bg-red-400 disabled:opacity-60"
         >
           {loading ? "Creating..." : "Create task"}
         </button>

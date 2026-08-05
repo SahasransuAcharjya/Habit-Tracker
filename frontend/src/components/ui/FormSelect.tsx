@@ -20,11 +20,11 @@ export default function FormSelect({
 }: FormSelectProps) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium text-slate-200">
+      <label className="mb-2 block text-sm font-medium text-stone-700">
         {label}
       </label>
       <select
-        className={`w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-500 ${className}`}
+        className={`w-full rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm text-stone-800 outline-none transition focus:border-red-500 ${className}`}
         {...props}
       >
         {options.map((option) => (
