@@ -32,9 +32,14 @@ export default function DashboardSidebar({
   return (
     <aside className="hidden min-h-screen w-72 border-r border-border bg-card/80 p-6 lg:block">
       <div className="mb-8">
-        <p className="text-sm uppercase tracking-[0.2em] text-primary-400">
-          Activity Assistant
-        </p>
+        <div className="flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-500 text-lg font-extrabold text-white shadow-lg shadow-orange-500/30">
+            V
+          </div>
+          <p className="text-sm uppercase tracking-[0.2em] text-primary-400">
+            Vow
+          </p>
+        </div>
         <h2 className="mt-3 text-2xl font-bold text-foreground">Stay accountable</h2>
         <p className="mt-2 text-sm text-muted-foreground">Welcome back, {userName}.</p>
       </div>

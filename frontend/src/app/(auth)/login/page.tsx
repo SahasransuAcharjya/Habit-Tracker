@@ -73,7 +73,7 @@ export default function LoginPage() {
     <main className="min-h-screen bg-background text-foreground flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-2xl">
         <div className="mb-6">
-          <p className="text-sm uppercase tracking-[0.2em] text-primary-400">Activity Assistant</p>
+          <p className="text-sm uppercase tracking-[0.2em] text-primary-400">Vow</p>
           <h1 className="mt-2 text-3xl font-bold">Login</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Continue to your dashboard and track your day properly.

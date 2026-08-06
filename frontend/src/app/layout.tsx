@@ -15,14 +15,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Activity Assistant",
+  title: "Vow",
   description: "A personal accountability assistant for planning, reminders, and daily reports.",
-  applicationName: "Activity Assistant",
+  applicationName: "Vow",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Activity Assistant",
+    title: "Vow",
   },
 };
 

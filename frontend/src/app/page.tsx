@@ -5,16 +5,21 @@ export default function HomePage() {
     <main className="min-h-screen bg-background text-foreground">
       <section className="mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 py-16">
         <div className="max-w-3xl">
-          <p className="text-sm uppercase tracking-[0.25em] text-primary-400">
-            Personal Accountability App
-          </p>
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500 text-2xl font-extrabold text-white shadow-lg shadow-orange-500/30">
+              V
+            </div>
+            <p className="text-sm uppercase tracking-[0.25em] text-primary-400">
+              Vow &mdash; Personal Accountability
+            </p>
+          </div>
 
           <h1 className="mt-4 text-5xl font-bold leading-tight md:text-6xl">
             Schedule your day, track your work, and face your report card honestly.
           </h1>
 
           <p className="mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
-            Activity Assistant helps you manage tasks, recurring habits, reminders,
+            Vow helps you manage tasks, recurring habits, reminders,
             end-of-day feedback, and performance reports from one clean mobile-friendly
             dashboard.
           </p>
