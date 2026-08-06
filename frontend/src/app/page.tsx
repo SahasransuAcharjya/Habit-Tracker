@@ -6,10 +6,10 @@ export default function HomePage() {
       <section className="mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 py-16">
         <div className="max-w-3xl">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500 text-2xl font-extrabold text-white shadow-lg shadow-orange-500/30">
+            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gradient-to-br from-orange-400 to-orange-600 text-2xl font-bold text-white shadow-md shadow-orange-500/20">
               V
             </div>
-            <p className="text-sm uppercase tracking-[0.25em] text-primary-400">
+            <p className="text-sm uppercase tracking-[0.25em] text-primary-400 font-medium">
               Vow &mdash; Personal Accountability
             </p>
           </div>
