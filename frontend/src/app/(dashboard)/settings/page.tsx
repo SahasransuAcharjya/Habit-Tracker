@@ -9,12 +9,14 @@ import FormCheckbox from "@/components/ui/FormCheckbox";
 import { useNotifications } from "@/hooks/useNotifications";
 import NotificationPermissionCard from "@/components/notifications/NotificationPermissionCard";
 import ReminderStatusCard from "@/components/notifications/ReminderStatusCard";
+import { useTheme } from "@/context/ThemeContext";
 
 type Profile = {
   id?: string;
   name?: string;
   email?: string;
   assistantTone?: string;
+  notificationSound?: string;
 };
 
 type ProfileResponse = {
@@ -27,6 +29,7 @@ export default function SettingsPage() {
   const [profile, setProfile] = useState({
     name: "",
     assistantTone: "BALANCED",
+    notificationSound: "bell",
   });
 
   const [email, setEmail] = useState("");
@@ -37,6 +40,7 @@ export default function SettingsPage() {
 
   const { settings, updateNotificationSettings, loading: notifLoading } = useNotifications();
   const [notifState, setNotifState] = useState(settings);
+  const { mode, color, setMode, setColor } = useTheme();
 
   useEffect(() => {
     setNotifState(settings);
@@ -52,9 +56,12 @@ export default function SettingsPage() {
           throw new Error(result.message || "Failed to fetch profile.");
         }
 
+        const savedSound = localStorage.getItem("activity_notification_sound") || "bell";
+
         setProfile({
           name: result.data.name || "",
           assistantTone: result.data.assistantTone || "BALANCED",
+          notificationSound: savedSound,
         });
         setEmail(result.data.email || "");
       } catch (err) {
@@ -75,7 +82,11 @@ export default function SettingsPage() {
 
     try {
       const token = localStorage.getItem("activity_token");
-      const result = await apiPatch<ProfileResponse>("/users/profile", profile, token);
+      
+      // Separate notificationSound so we don't send it to the backend
+      const { notificationSound, ...apiPayload } = profile;
+      
+      const result = await apiPatch<ProfileResponse>("/users/profile", apiPayload, token);
 
       if (!result.success) {
         throw new Error(result.message || "Failed to update profile.");
@@ -86,6 +97,11 @@ export default function SettingsPage() {
         reminderInterval: notifState.reminderInterval ? Number(notifState.reminderInterval) : null,
         autoMarkMissedEnabled: notifState.autoMarkMissedEnabled,
       });
+
+      // Save notification sound locally
+      if (notificationSound) {
+        localStorage.setItem("activity_notification_sound", notificationSound);
+      }
 
       setSuccessMessage(result.message || "Settings updated.");
       localStorage.setItem(
@@ -104,9 +120,15 @@ export default function SettingsPage() {
     }
   };
 
+  const playSound = (sound: string) => {
+    setProfile(prev => ({ ...prev, notificationSound: sound }));
+    localStorage.setItem("activity_notification_sound", sound);
+    // In a real implementation we would play the audio file here
+  };
+
   if (loading || notifLoading) {
     return (
-      <section className="rounded-2xl border border-stone-200 bg-white p-6 text-stone-600">
+      <section className="rounded-2xl border border-border bg-card p-6 text-muted-foreground">
         Loading settings...
       </section>
     );
@@ -116,8 +138,8 @@ export default function SettingsPage() {
     <section className="max-w-2xl space-y-6">
       <div>
         <h2 className="text-2xl font-bold">Settings</h2>
-        <p className="mt-1 text-sm text-stone-500">
-          Adjust your profile and assistant tone.
+        <p className="mt-1 text-sm text-muted-foreground">
+          Adjust your profile, theme, and assistant tone.
         </p>
       </div>
 
@@ -132,9 +154,9 @@ export default function SettingsPage() {
 
       <form
         onSubmit={handleSubmit}
-        className="grid gap-4 rounded-2xl border border-stone-200 bg-white p-6"
+        className="grid gap-4 rounded-2xl border border-border bg-card p-6"
       >
-        <h3 className="text-xl font-semibold text-stone-800 mb-2">Profile & Preferences</h3>
+        <h3 className="text-xl font-semibold text-foreground mb-2">Profile & Preferences</h3>
         
         <FormInput
           label="Name"
@@ -146,7 +168,7 @@ export default function SettingsPage() {
           label="Email"
           value={email}
           disabled
-          className="text-stone-400"
+          className="text-muted-foreground"
         />
 
         <FormSelect
@@ -163,8 +185,51 @@ export default function SettingsPage() {
           ]}
         />
         
-        <div className="border-t border-stone-200 my-4 pt-4">
-          <h3 className="text-xl font-semibold text-stone-800 mb-4">Notification Settings</h3>
+        <div className="border-t border-border my-4 pt-4">
+          <h3 className="text-xl font-semibold text-foreground mb-4">Personalization</h3>
+          
+          <div className="grid gap-4 sm:grid-cols-2">
+            <FormSelect
+              label="Theme Mode"
+              value={mode}
+              onChange={(e) => setMode(e.target.value as any)}
+              options={[
+                { label: "Light", value: "light" },
+                { label: "Dark", value: "dark" },
+              ]}
+            />
+            
+            <FormSelect
+              label="Color Theme"
+              value={color}
+              onChange={(e) => setColor(e.target.value as any)}
+              options={[
+                { label: "Red", value: "red" },
+                { label: "Blue", value: "blue" },
+                { label: "Green", value: "green" },
+              ]}
+            />
+          </div>
+
+          <div className="mt-4">
+            <FormSelect
+              label="Notification Sound"
+              value={profile.notificationSound}
+              onChange={(e) => playSound(e.target.value)}
+              options={[
+                { label: "Classic Bell", value: "bell" },
+                { label: "Soft Chime", value: "chime" },
+                { label: "Harp Pluck", value: "harp" },
+                { label: "Digital Beep", value: "digital" },
+                { label: "Minimal Pop", value: "minimal" },
+              ]}
+            />
+            <p className="mt-1 text-xs text-muted-foreground">Changing the sound will play a preview.</p>
+          </div>
+        </div>
+
+        <div className="border-t border-border my-4 pt-4">
+          <h3 className="text-xl font-semibold text-foreground mb-4">Notification Settings</h3>
           
           <FormCheckbox 
             label="Enable Reminders"
@@ -189,7 +254,7 @@ export default function SettingsPage() {
         </div>
 
         {error ? (
-          <div className="rounded-xl border border-red-800 bg-red-950/40 px-4 py-3 text-sm text-red-300">
+          <div className="rounded-xl border border-primary-800 bg-primary-950/40 px-4 py-3 text-sm text-primary-300">
             {error}
           </div>
         ) : null}

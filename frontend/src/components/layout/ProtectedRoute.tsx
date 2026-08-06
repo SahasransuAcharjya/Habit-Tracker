@@ -35,8 +35,8 @@ export default function ProtectedRoute({
   if (checking) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="flex flex-col items-center gap-3 text-stone-600">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-stone-300 border-t-red-400" />
+        <div className="flex flex-col items-center gap-3 text-muted-foreground">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-border border-t-red-400" />
           <p className="text-sm">Checking access...</p>
         </div>
       </div>

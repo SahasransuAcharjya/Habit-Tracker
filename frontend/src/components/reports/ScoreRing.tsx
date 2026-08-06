@@ -20,7 +20,7 @@ export default function ScoreRing({
       ? "text-sky-400"
       : normalizedScore >= 45
       ? "text-amber-400"
-      : "text-red-400";
+      : "text-primary-400";
 
   return (
     <div className="relative flex items-center justify-center">
@@ -49,8 +49,8 @@ export default function ScoreRing({
       </svg>
 
       <div className="absolute flex flex-col items-center justify-center">
-        <span className="text-3xl font-bold text-stone-800">{normalizedScore}</span>
-        <span className="text-xs uppercase tracking-[0.2em] text-stone-500">
+        <span className="text-3xl font-bold text-foreground">{normalizedScore}</span>
+        <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
           Score
         </span>
       </div>

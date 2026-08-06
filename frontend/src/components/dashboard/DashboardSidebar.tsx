@@ -30,13 +30,13 @@ export default function DashboardSidebar({
   };
 
   return (
-    <aside className="hidden min-h-screen w-72 border-r border-stone-200 bg-white/80 p-6 lg:block">
+    <aside className="hidden min-h-screen w-72 border-r border-border bg-card/80 p-6 lg:block">
       <div className="mb-8">
-        <p className="text-sm uppercase tracking-[0.2em] text-red-400">
+        <p className="text-sm uppercase tracking-[0.2em] text-primary-400">
           Activity Assistant
         </p>
-        <h2 className="mt-3 text-2xl font-bold text-stone-800">Stay accountable</h2>
-        <p className="mt-2 text-sm text-stone-500">Welcome back, {userName}.</p>
+        <h2 className="mt-3 text-2xl font-bold text-foreground">Stay accountable</h2>
+        <p className="mt-2 text-sm text-muted-foreground">Welcome back, {userName}.</p>
       </div>
 
       <nav className="space-y-2">
@@ -50,8 +50,8 @@ export default function DashboardSidebar({
               href={item.href}
               className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-[550ms] ease-out active:scale-[0.98] ${
                 isActive
-                  ? "bg-red-500 font-semibold text-white shadow-md shadow-red-500/20"
-                  : "text-stone-600 hover:bg-stone-100 hover:text-stone-800"
+                  ? "bg-primary-500 font-semibold text-white shadow-md shadow-primary-500/20"
+                  : "text-muted-foreground hover:bg-stone-100 hover:text-foreground"
               }`}
             >
               <span className="text-base">{item.icon}</span>
@@ -61,16 +61,16 @@ export default function DashboardSidebar({
         })}
       </nav>
 
-      <div className="mt-8 rounded-2xl border border-stone-200 bg-[#fdfaf6] p-4">
-        <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Mindset</p>
-        <p className="mt-2 text-sm text-stone-600">
+      <div className="mt-8 rounded-2xl border border-border bg-background p-4">
+        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Mindset</p>
+        <p className="mt-2 text-sm text-muted-foreground">
           Your results tomorrow depend on the excuses you reject today.
         </p>
       </div>
 
       <button
         onClick={handleLogout}
-        className="mt-6 w-full rounded-xl border border-stone-200 px-4 py-3 text-sm font-medium text-stone-700 transition-all duration-[550ms] ease-out hover:border-stone-300 hover:bg-stone-50 hover:shadow-sm active:scale-[0.98] active:translate-y-0"
+        className="mt-6 w-full rounded-xl border border-border px-4 py-3 text-sm font-medium text-foreground transition-all duration-[550ms] ease-out hover:border-border hover:bg-stone-50 hover:shadow-sm active:scale-[0.98] active:translate-y-0"
       >
         Logout
       </button>

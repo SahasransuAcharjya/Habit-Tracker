@@ -18,62 +18,62 @@ type TaskDetailsCardProps = {
 export default function TaskDetailsCard({ task }: TaskDetailsCardProps) {
   if (!task) {
     return (
-      <div className="rounded-2xl border border-stone-200 bg-white p-6 text-center text-sm text-stone-500">
+      <div className="rounded-2xl border border-border bg-card p-6 text-center text-sm text-muted-foreground">
         Select a task to view its details.
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-lg">
+    <div className="rounded-2xl border border-border bg-card p-6 shadow-lg">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-red-400">Task details</p>
-          <h3 className="mt-2 text-2xl font-bold text-stone-800">{task.title}</h3>
+          <p className="text-xs uppercase tracking-[0.2em] text-primary-400">Task details</p>
+          <h3 className="mt-2 text-2xl font-bold text-foreground">{task.title}</h3>
         </div>
 
-        <span className="rounded-full bg-stone-100 px-3 py-1 text-xs text-stone-600">
+        <span className="rounded-full bg-stone-100 px-3 py-1 text-xs text-muted-foreground">
           {task.status || "PENDING"}
         </span>
       </div>
 
       {task.description ? (
-        <p className="mt-4 text-sm leading-6 text-stone-600">{task.description}</p>
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">{task.description}</p>
       ) : (
-        <p className="mt-4 text-sm leading-6 text-stone-400">No description added.</p>
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">No description added.</p>
       )}
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Category</p>
-          <p className="mt-2 text-sm text-stone-700">{task.category || "General"}</p>
+        <div className="rounded-xl border border-border bg-background p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Category</p>
+          <p className="mt-2 text-sm text-foreground">{task.category || "General"}</p>
         </div>
 
-        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Priority</p>
-          <p className="mt-2 text-sm text-stone-700">{task.priority || "LOW"}</p>
+        <div className="rounded-xl border border-border bg-background p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Priority</p>
+          <p className="mt-2 text-sm text-foreground">{task.priority || "LOW"}</p>
         </div>
 
-        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Start time</p>
-          <p className="mt-2 text-sm text-stone-700">{task.startTime || "Not set"}</p>
+        <div className="rounded-xl border border-border bg-background p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Start time</p>
+          <p className="mt-2 text-sm text-foreground">{task.startTime || "Not set"}</p>
         </div>
 
-        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">End time</p>
-          <p className="mt-2 text-sm text-stone-700">{task.endTime || "Not set"}</p>
+        <div className="rounded-xl border border-border bg-background p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">End time</p>
+          <p className="mt-2 text-sm text-foreground">{task.endTime || "Not set"}</p>
         </div>
 
-        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Reminder interval</p>
-          <p className="mt-2 text-sm text-stone-700">
+        <div className="rounded-xl border border-border bg-background p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Reminder interval</p>
+          <p className="mt-2 text-sm text-foreground">
             {task.reminderInterval ? `${task.reminderInterval} min` : "Not set"}
           </p>
         </div>
 
-        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Recurrence</p>
-          <p className="mt-2 text-sm text-stone-700">{task.recurrenceRule || "One-time task"}</p>
+        <div className="rounded-xl border border-border bg-background p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Recurrence</p>
+          <p className="mt-2 text-sm text-foreground">{task.recurrenceRule || "One-time task"}</p>
         </div>
       </div>
     </div>

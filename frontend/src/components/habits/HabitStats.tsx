@@ -11,10 +11,10 @@ export default function HabitStats({
 }: HabitStatsProps) {
   return (
     <div className="grid gap-4 sm:grid-cols-3">
-      <div className="rounded-2xl border border-stone-200 bg-white p-5">
-        <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Total habits</p>
-        <h3 className="mt-3 text-3xl font-bold text-stone-800">{totalHabits}</h3>
-        <p className="mt-2 text-sm text-stone-500">All recurring routines you created.</p>
+      <div className="rounded-2xl border border-border bg-card p-5">
+        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Total habits</p>
+        <h3 className="mt-3 text-3xl font-bold text-foreground">{totalHabits}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">All recurring routines you created.</p>
       </div>
 
       <div className="rounded-2xl border border-emerald-800 bg-sky-50/20 p-5">

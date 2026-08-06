@@ -16,8 +16,8 @@ const toneStyles = {
     text: "text-amber-100",
   },
   motivation: {
-    wrapper: "border-cyan-800 bg-red-50/30",
-    title: "text-red-600",
+    wrapper: "border-cyan-800 bg-primary-50/30",
+    title: "text-primary-600",
     text: "text-cyan-100",
   },
 };

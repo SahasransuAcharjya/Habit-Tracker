@@ -13,14 +13,14 @@ export default function FormTextarea({
 }: FormTextareaProps) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium text-stone-700">
+      <label className="mb-2 block text-sm font-medium text-foreground">
         {label}
       </label>
       <textarea
-        className={`min-h-24 w-full rounded-xl border border-stone-300 bg-[#fdfaf6] px-4 py-3 text-sm text-stone-800 outline-none transition focus:border-red-500 ${className}`}
+        className={`min-h-24 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary-500 ${className}`}
         {...props}
       />
-      {error ? <p className="mt-2 text-xs text-red-300">{error}</p> : null}
+      {error ? <p className="mt-2 text-xs text-primary-300">{error}</p> : null}
     </div>
   );
 }

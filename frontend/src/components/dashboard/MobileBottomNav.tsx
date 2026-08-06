@@ -15,7 +15,7 @@ export default function MobileBottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-stone-200 bg-[#fdfaf6]/95 px-2 py-2 backdrop-blur lg:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-background/95 px-2 py-2 backdrop-blur lg:hidden">
       <div className="grid grid-cols-5 gap-1">
         {navItems.map((item) => {
           const isActive =
@@ -27,8 +27,8 @@ export default function MobileBottomNav() {
               href={item.href}
               className={`flex flex-col items-center justify-center rounded-xl px-2 py-2 text-[11px] transition-all duration-[550ms] ease-out active:scale-[0.94] ${
                 isActive
-                  ? "bg-red-500 font-semibold text-white shadow-sm shadow-red-500/20"
-                  : "text-stone-600 hover:bg-stone-100 hover:text-stone-800"
+                  ? "bg-primary-500 font-semibold text-white shadow-sm shadow-primary-500/20"
+                  : "text-muted-foreground hover:bg-stone-100 hover:text-foreground"
               }`}
             >
               <span className="text-base">{item.icon}</span>

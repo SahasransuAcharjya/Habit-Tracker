@@ -24,27 +24,27 @@ export default function TodayHero({
   }, []);
 
   return (
-    <section className="rounded-2xl border border-stone-200 bg-gradient-to-br from-white via-white to-red-50/30 p-6">
-      <p className="text-sm uppercase tracking-[0.2em] text-red-400">Today</p>
-      <h2 className="mt-2 text-3xl font-bold text-stone-800">{todayText}</h2>
-      <p className="mt-2 max-w-2xl text-sm text-stone-600">
+    <section className="rounded-2xl border border-border bg-gradient-to-br from-white via-white to-red-50/30 p-6">
+      <p className="text-sm uppercase tracking-[0.2em] text-primary-400">Today</p>
+      <h2 className="mt-2 text-3xl font-bold text-foreground">{todayText}</h2>
+      <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
         Finish what matters, avoid fake productivity, and give yourself a day worth
         respecting tonight.
       </p>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6]/70 p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Completed</p>
+        <div className="rounded-xl border border-border bg-background/70 p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Completed</p>
           <p className="mt-2 text-2xl font-bold text-sky-600">{completedCount}</p>
         </div>
 
-        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6]/70 p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Pending</p>
-          <p className="mt-2 text-2xl font-bold text-red-600">{pendingCount}</p>
+        <div className="rounded-xl border border-border bg-background/70 p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Pending</p>
+          <p className="mt-2 text-2xl font-bold text-primary-600">{pendingCount}</p>
         </div>
 
-        <div className="rounded-xl border border-stone-200 bg-[#fdfaf6]/70 p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-400">Skipped</p>
+        <div className="rounded-xl border border-border bg-background/70 p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Skipped</p>
           <p className="mt-2 text-2xl font-bold text-amber-300">{skippedCount}</p>
         </div>
       </div>
@@ -52,14 +52,14 @@ export default function TodayHero({
       <div className="mt-5 flex flex-wrap gap-3">
         <Link
           href="/tasks/create"
-          className="rounded-xl bg-red-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-400"
+          className="rounded-xl bg-primary-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-400"
         >
           Create task
         </Link>
 
         <Link
           href="/reports"
-          className="rounded-xl border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 transition hover:bg-stone-100"
+          className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:bg-stone-100"
         >
           Open report
         </Link>

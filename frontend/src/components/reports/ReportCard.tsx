@@ -20,7 +20,7 @@ export default function ReportCard({ report }: ReportCardProps) {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-lg">
+      <div className="rounded-2xl border border-border bg-card p-6 shadow-lg">
         <div className="grid gap-6 md:grid-cols-[160px_1fr] md:items-center">
           <div className="flex justify-center">
             <ScoreRing score={score} />
@@ -29,10 +29,10 @@ export default function ReportCard({ report }: ReportCardProps) {
           <div>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-red-400">
+                <p className="text-xs uppercase tracking-[0.2em] text-primary-400">
                   Daily report
                 </p>
-                <h3 className="mt-2 text-2xl font-bold text-stone-800">
+                <h3 className="mt-2 text-2xl font-bold text-foreground">
                   {report.reportDate || "Today"}
                 </h3>
               </div>
@@ -43,7 +43,7 @@ export default function ReportCard({ report }: ReportCardProps) {
                     ? "bg-sky-500/15 text-sky-600 ring-1 ring-sky-500/25"
                     : score >= 45
                     ? "bg-amber-500/15 text-amber-300 ring-1 ring-amber-500/25"
-                    : "bg-red-500/15 text-red-300 ring-1 ring-red-500/25"
+                    : "bg-primary-500/15 text-primary-300 ring-1 ring-primary-500/25"
                 }`}
               >
                 {score >= 75
@@ -54,7 +54,7 @@ export default function ReportCard({ report }: ReportCardProps) {
               </span>
             </div>
 
-            <p className="mt-4 text-sm leading-6 text-stone-600">
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">
               {report.summary || "No summary available for this report yet."}
             </p>
           </div>

@@ -3,17 +3,85 @@
 @tailwind utilities;
 
 :root {
+  /* LIGHT MODE (default) */
   --background: #fdfaf6;
   --foreground: #334155;
-  --muted: #94a3b8;
+  --muted: #f5f5f4;
+  --muted-foreground: #78716c;
   --border: rgba(15, 23, 42, 0.1);
   --card: rgba(255, 255, 255, 0.88);
   --card-strong: rgba(255, 255, 255, 0.96);
-  --accent: #ef4444;
-  --accent-strong: #dc2626;
   --success: #0ea5e9;
   --warning: #f59e0b;
   --danger: #ef4444;
+
+  /* RED THEME (default) */
+  --primary-50: 254 242 242;
+  --primary-100: 254 226 226;
+  --primary-200: 254 202 202;
+  --primary-300: 252 165 165;
+  --primary-400: 248 113 113;
+  --primary-500: 239 68 68;
+  --primary-600: 220 38 38;
+  --primary-700: 185 28 28;
+  --primary-800: 153 27 27;
+  --primary-900: 127 29 29;
+  --primary-950: 69 10 10;
+  --primary-glow: rgba(239, 68, 68, 0.08);
+}
+
+/* DARK MODE */
+html[data-theme="dark"] {
+  --background: #020617;
+  --foreground: #f8fafc;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --border: rgba(255, 255, 255, 0.15);
+  --card: rgba(15, 23, 42, 0.88);
+  --card-strong: rgba(15, 23, 42, 0.96);
+}
+
+/* DARK MODE + RED */
+html[data-theme="dark"] {
+  --primary-glow: rgba(239, 68, 68, 0.15);
+}
+
+/* BLUE THEME */
+html[data-color="blue"] {
+  --primary-50: 239 246 255;
+  --primary-100: 219 234 254;
+  --primary-200: 191 219 254;
+  --primary-300: 147 197 253;
+  --primary-400: 96 165 250;
+  --primary-500: 59 130 246;
+  --primary-600: 37 99 235;
+  --primary-700: 29 78 216;
+  --primary-800: 30 64 175;
+  --primary-900: 30 58 138;
+  --primary-950: 23 37 84;
+  --primary-glow: rgba(59, 130, 246, 0.08);
+}
+html[data-theme="dark"][data-color="blue"] {
+  --primary-glow: rgba(59, 130, 246, 0.15);
+}
+
+/* GREEN THEME */
+html[data-color="green"] {
+  --primary-50: 240 253 244;
+  --primary-100: 220 252 231;
+  --primary-200: 187 247 208;
+  --primary-300: 134 239 172;
+  --primary-400: 74 222 128;
+  --primary-500: 34 197 94;
+  --primary-600: 22 163 74;
+  --primary-700: 21 128 61;
+  --primary-800: 22 101 52;
+  --primary-900: 20 83 45;
+  --primary-950: 5 46 22;
+  --primary-glow: rgba(34, 197, 94, 0.08);
+}
+html[data-theme="dark"][data-color="green"] {
+  --primary-glow: rgba(34, 197, 94, 0.15);
 }
 
 *,
@@ -30,8 +98,8 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top, rgba(239, 68, 68, 0.08), transparent 28%),
-    linear-gradient(to bottom, #fdfaf6, #fdfaf6);
+    radial-gradient(circle at top, var(--primary-glow), transparent 28%),
+    linear-gradient(to bottom, var(--background), var(--background));
   color: var(--foreground);
   font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   text-rendering: optimizeLegibility;
@@ -97,7 +165,7 @@ canvas {
 
 @layer components {
   .app-shell {
-    @apply min-h-screen bg-[#fdfaf6] text-stone-800;
+    @apply min-h-screen bg-background text-foreground;
   }
 
   .page-wrap {
@@ -117,11 +185,11 @@ canvas {
   }
 
   .section-title {
-    @apply text-2xl font-bold text-stone-800 md:text-3xl;
+    @apply text-2xl font-bold text-foreground md:text-3xl;
   }
 
   .section-subtitle {
-    @apply mt-1 text-sm text-stone-500;
+    @apply mt-1 text-sm text-muted-foreground;
   }
 
   .badge {
@@ -129,7 +197,7 @@ canvas {
   }
 
   .badge-neutral {
-    @apply bg-stone-100 text-stone-600 border border-stone-200;
+    @apply bg-stone-100 text-muted-foreground border border-border;
   }
 
   .badge-success {
@@ -141,7 +209,7 @@ canvas {
   }
 
   .badge-danger {
-    @apply bg-red-50 text-red-700 ring-1 ring-red-500/20;
+    @apply bg-primary-50 text-primary-700 ring-1 ring-primary-500/20;
   }
 
   .btn {
@@ -149,11 +217,11 @@ canvas {
   }
 
   .btn-primary {
-    @apply bg-red-500 text-white hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-60 shadow-sm;
+    @apply bg-primary-500 text-white hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60 shadow-sm;
   }
 
   .btn-secondary {
-    @apply border border-stone-300 bg-white text-stone-700 hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-60 shadow-sm;
+    @apply border border-border bg-card text-foreground hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-60 shadow-sm;
   }
 
   .btn-success {
@@ -165,39 +233,39 @@ canvas {
   }
 
   .btn-danger {
-    @apply bg-red-500 text-white hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-60 shadow-sm;
+    @apply bg-primary-500 text-white hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60 shadow-sm;
   }
 
   .input {
-    @apply w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm text-stone-800 outline-none transition focus:border-red-400 focus:ring-2 focus:ring-red-400/20;
+    @apply w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-400/20;
   }
 
   .textarea {
-    @apply min-h-28 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm text-stone-800 outline-none transition focus:border-red-400 focus:ring-2 focus:ring-red-400/20;
+    @apply min-h-28 w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-400/20;
   }
 
   .select {
-    @apply w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-sm text-stone-800 outline-none transition focus:border-red-400 focus:ring-2 focus:ring-red-400/20;
+    @apply w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary-400 focus:ring-2 focus:ring-primary-400/20;
   }
 
   .label {
-    @apply mb-2 block text-sm font-medium text-stone-700;
+    @apply mb-2 block text-sm font-medium text-foreground;
   }
 
   .card {
-    @apply rounded-2xl border border-stone-200 bg-white p-5 shadow-sm;
+    @apply rounded-2xl border border-border bg-card p-5 shadow-sm;
   }
 
   .card-hover {
-    @apply transition hover:border-stone-300 hover:shadow-md;
+    @apply transition hover:border-border hover:shadow-md;
   }
 
   .helper-text {
-    @apply text-sm text-stone-500;
+    @apply text-sm text-muted-foreground;
   }
 
   .error-box {
-    @apply rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700;
+    @apply rounded-xl border border-primary-200 bg-primary-50 px-4 py-3 text-sm text-primary-700;
   }
 
   .success-box {
@@ -205,7 +273,7 @@ canvas {
   }
 
   .info-box {
-    @apply rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700;
+    @apply rounded-xl border border-border bg-stone-50 px-4 py-3 text-sm text-foreground;
   }
 
   .dashboard-grid {
@@ -252,8 +320,8 @@ canvas {
 @media (max-width: 640px) {
   body {
     background:
-      radial-gradient(circle at top, rgba(239, 68, 68, 0.06), transparent 24%),
-      linear-gradient(to bottom, #fdfaf6, #fdfaf6);
+      radial-gradient(circle at top, var(--primary-glow), transparent 24%),
+      linear-gradient(to bottom, var(--background), var(--background));
   }
 }
 

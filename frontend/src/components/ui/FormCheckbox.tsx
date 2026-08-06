@@ -16,13 +16,13 @@ export default function FormCheckbox({
   className = "",
 }: FormCheckboxProps) {
   return (
-    <label className={`flex cursor-pointer items-center gap-3 text-sm text-stone-700 ${className}`}>
+    <label className={`flex cursor-pointer items-center gap-3 text-sm text-foreground ${className}`}>
       <input
         type="checkbox"
         checked={checked}
         disabled={disabled}
         onChange={(e) => onChange(e.target.checked)}
-        className="h-4 w-4 rounded border border-slate-600 bg-[#fdfaf6] accent-red-500"
+        className="h-4 w-4 rounded border border-slate-600 bg-background accent-red-500"
       />
       <span>{label}</span>
     </label>

@@ -16,7 +16,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <ProtectedRoute>
-      <div className="flex min-h-screen bg-[#fdfaf6] text-stone-800">
+      <div className="flex min-h-screen bg-background text-foreground">
         <DashboardSidebar userName={user?.name || "User"} />
         <div className="flex flex-1 flex-col pb-16 lg:pb-0">
           <DashboardTopbar />

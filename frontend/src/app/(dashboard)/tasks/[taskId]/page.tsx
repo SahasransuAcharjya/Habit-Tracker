@@ -68,7 +68,7 @@ export default function TaskDetailsPage() {
 
   if (loading) {
     return (
-      <section className="rounded-2xl border border-stone-200 bg-white p-6 text-stone-600">
+      <section className="rounded-2xl border border-border bg-card p-6 text-muted-foreground">
         Loading task...
       </section>
     );
@@ -76,7 +76,7 @@ export default function TaskDetailsPage() {
 
   if (error) {
     return (
-      <section className="rounded-2xl border border-red-800 bg-red-950/40 p-6 text-red-300">
+      <section className="rounded-2xl border border-primary-800 bg-primary-950/40 p-6 text-primary-300">
         {error}
       </section>
     );
@@ -84,7 +84,7 @@ export default function TaskDetailsPage() {
 
   if (!task) {
     return (
-      <section className="rounded-2xl border border-stone-200 bg-white p-6 text-stone-600">
+      <section className="rounded-2xl border border-border bg-card p-6 text-muted-foreground">
         Task not found.
       </section>
     );
@@ -92,23 +92,23 @@ export default function TaskDetailsPage() {
 
   return (
     <section className="space-y-6">
-      <Link href="/tasks" className="inline-block text-sm text-red-400 hover:text-red-600">
+      <Link href="/tasks" className="inline-block text-sm text-primary-400 hover:text-primary-600">
         ← Back to tasks
       </Link>
 
-      <div className="rounded-2xl border border-stone-200 bg-white p-6">
+      <div className="rounded-2xl border border-border bg-card p-6">
         <div className="flex flex-wrap items-center gap-3">
           <h2 className="text-2xl font-bold">{task.title}</h2>
-          <span className="rounded-full bg-stone-100 px-3 py-1 text-xs text-stone-600">
+          <span className="rounded-full bg-stone-100 px-3 py-1 text-xs text-muted-foreground">
             {task.priority || "MEDIUM"}
           </span>
-          <span className="rounded-full bg-stone-100 px-3 py-1 text-xs text-stone-600">
+          <span className="rounded-full bg-stone-100 px-3 py-1 text-xs text-muted-foreground">
             {task.type || "ONE_TIME"}
           </span>
         </div>
 
         {task.description ? (
-          <p className="mt-4 text-sm text-stone-500">{task.description}</p>
+          <p className="mt-4 text-sm text-muted-foreground">{task.description}</p>
         ) : null}
 
         <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -136,9 +136,9 @@ export default function TaskDetailsPage() {
 
 function Info({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-stone-200 bg-[#fdfaf6] p-4">
-      <p className="text-xs uppercase tracking-[0.2em] text-stone-400">{label}</p>
-      <p className="mt-2 text-sm text-stone-700">{value}</p>
+    <div className="rounded-xl border border-border bg-background p-4">
+      <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{label}</p>
+      <p className="mt-2 text-sm text-foreground">{value}</p>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { AuthProvider } from "@/context/AuthContext";
 import { AppProvider } from "@/context/AppContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -32,12 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className="min-h-screen bg-[#fdfaf6] font-sans text-stone-800 antialiased" suppressHydrationWarning>
-        <AuthProvider>
-          <AppProvider>
-            {children}
-          </AppProvider>
-        </AuthProvider>
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased" suppressHydrationWarning>
+        <ThemeProvider>
+          <AuthProvider>
+            <AppProvider>
+              {children}
+            </AppProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

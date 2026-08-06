@@ -70,12 +70,12 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#fdfaf6] text-stone-800 flex items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md rounded-2xl border border-stone-200 bg-white p-6 shadow-2xl">
+    <main className="min-h-screen bg-background text-foreground flex items-center justify-center px-4 py-10">
+      <div className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-2xl">
         <div className="mb-6">
-          <p className="text-sm uppercase tracking-[0.2em] text-red-400">Activity Assistant</p>
+          <p className="text-sm uppercase tracking-[0.2em] text-primary-400">Activity Assistant</p>
           <h1 className="mt-2 text-3xl font-bold">Login</h1>
-          <p className="mt-2 text-sm text-stone-500">
+          <p className="mt-2 text-sm text-muted-foreground">
             Continue to your dashboard and track your day properly.
           </p>
         </div>
@@ -104,7 +104,7 @@ export default function LoginPage() {
           />
 
           {error ? (
-            <div className="rounded-xl border border-red-800 bg-red-950/50 px-4 py-3 text-sm text-red-300">
+            <div className="rounded-xl border border-primary-800 bg-primary-950/50 px-4 py-3 text-sm text-primary-300">
               {error}
             </div>
           ) : null}
@@ -120,9 +120,9 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        <p className="mt-6 text-sm text-stone-500">
+        <p className="mt-6 text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="font-medium text-red-400 hover:text-red-600">
+          <Link href="/register" className="font-medium text-primary-400 hover:text-primary-600">
             Register
           </Link>
         </p>
