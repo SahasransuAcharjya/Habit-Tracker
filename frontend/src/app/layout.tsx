@@ -31,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-[#fdfaf6] font-sans text-stone-800 antialiased">
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body className="min-h-screen bg-[#fdfaf6] font-sans text-stone-800 antialiased" suppressHydrationWarning>
         <AuthProvider>
           <AppProvider>
             {children}

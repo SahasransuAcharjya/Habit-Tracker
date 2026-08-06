@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useAuthContext } from "@/context/AuthContext";
 
 type DashboardSidebarProps = {
   userName?: string;
@@ -21,10 +22,10 @@ export default function DashboardSidebar({
 }: DashboardSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const { logout } = useAuthContext();
 
   const handleLogout = () => {
-    localStorage.removeItem("activity_token");
-    localStorage.removeItem("activity_user");
+    logout();
     router.push("/login");
   };
 
