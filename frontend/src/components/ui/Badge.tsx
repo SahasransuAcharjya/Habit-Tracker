@@ -19,7 +19,7 @@ type BadgeProps = {
 };
 
 const variantClasses: Record<BadgeVariant, string> = {
-  default: "bg-stone-100 text-foreground",
+  default: "bg-muted text-foreground",
   success: "bg-sky-500/15 text-sky-600 ring-1 ring-sky-500/20",
   warning: "bg-amber-500/15 text-amber-300 ring-1 ring-amber-500/20",
   danger: "bg-primary-500/15 text-primary-300 ring-1 ring-primary-500/20",

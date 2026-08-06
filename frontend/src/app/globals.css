@@ -197,7 +197,7 @@ canvas {
   }
 
   .badge-neutral {
-    @apply bg-stone-100 text-muted-foreground border border-border;
+    @apply bg-muted text-muted-foreground border border-border;
   }
 
   .badge-success {
@@ -221,7 +221,7 @@ canvas {
   }
 
   .btn-secondary {
-    @apply border border-border bg-card text-foreground hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-60 shadow-sm;
+    @apply border border-border bg-card text-foreground hover:bg-muted/50 disabled:cursor-not-allowed disabled:opacity-60 shadow-sm;
   }
 
   .btn-success {
@@ -273,7 +273,7 @@ canvas {
   }
 
   .info-box {
-    @apply rounded-xl border border-border bg-stone-50 px-4 py-3 text-sm text-foreground;
+    @apply rounded-xl border border-border bg-muted/50 px-4 py-3 text-sm text-foreground;
   }
 
   .dashboard-grid {

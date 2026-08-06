@@ -99,10 +99,10 @@ export default function TaskDetailsPage() {
       <div className="rounded-2xl border border-border bg-card p-6">
         <div className="flex flex-wrap items-center gap-3">
           <h2 className="text-2xl font-bold">{task.title}</h2>
-          <span className="rounded-full bg-stone-100 px-3 py-1 text-xs text-muted-foreground">
+          <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
             {task.priority || "MEDIUM"}
           </span>
-          <span className="rounded-full bg-stone-100 px-3 py-1 text-xs text-muted-foreground">
+          <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
             {task.type || "ONE_TIME"}
           </span>
         </div>

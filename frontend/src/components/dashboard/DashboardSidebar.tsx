@@ -51,7 +51,7 @@ export default function DashboardSidebar({
               className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-[550ms] ease-out active:scale-[0.98] ${
                 isActive
                   ? "bg-primary-500 font-semibold text-white shadow-md shadow-primary-500/20"
-                  : "text-muted-foreground hover:bg-stone-100 hover:text-foreground"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
               <span className="text-base">{item.icon}</span>
@@ -70,7 +70,7 @@ export default function DashboardSidebar({
 
       <button
         onClick={handleLogout}
-        className="mt-6 w-full rounded-xl border border-border px-4 py-3 text-sm font-medium text-foreground transition-all duration-[550ms] ease-out hover:border-border hover:bg-stone-50 hover:shadow-sm active:scale-[0.98] active:translate-y-0"
+        className="mt-6 w-full rounded-xl border border-border px-4 py-3 text-sm font-medium text-foreground transition-all duration-[550ms] ease-out hover:border-border hover:bg-muted/50 hover:shadow-sm active:scale-[0.98] active:translate-y-0"
       >
         Logout
       </button>

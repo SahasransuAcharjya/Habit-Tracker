@@ -34,13 +34,13 @@ export default function HabitCard({
               className={`rounded-full px-3 py-1 text-xs font-medium ${
                 habit.isActive
                   ? "bg-sky-500/15 text-sky-600 ring-1 ring-sky-500/25"
-                  : "bg-stone-100 text-muted-foreground"
+                  : "bg-muted text-muted-foreground"
               }`}
             >
               {habit.isActive ? "Active" : "Paused"}
             </span>
 
-            <span className="rounded-full bg-stone-100 px-3 py-1 text-xs text-muted-foreground">
+            <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
               {formatEnumLabel(habit.frequency || "DAILY")}
             </span>
           </div>

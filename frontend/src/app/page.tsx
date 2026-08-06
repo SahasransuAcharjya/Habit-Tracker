@@ -29,7 +29,7 @@ export default function HomePage() {
 
             <Link
               href="/login"
-              className="rounded-xl border border-border bg-card px-5 py-3 text-sm font-medium text-foreground transition-all duration-[550ms] ease-out hover:-translate-y-[1px] hover:border-border hover:bg-stone-50 hover:shadow-sm active:scale-[0.98] active:translate-y-0"
+              className="rounded-xl border border-border bg-card px-5 py-3 text-sm font-medium text-foreground transition-all duration-[550ms] ease-out hover:-translate-y-[1px] hover:border-border hover:bg-muted/50 hover:shadow-sm active:scale-[0.98] active:translate-y-0"
             >
               Login
             </Link>

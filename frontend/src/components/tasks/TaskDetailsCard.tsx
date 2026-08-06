@@ -32,7 +32,7 @@ export default function TaskDetailsCard({ task }: TaskDetailsCardProps) {
           <h3 className="mt-2 text-2xl font-bold text-foreground">{task.title}</h3>
         </div>
 
-        <span className="rounded-full bg-stone-100 px-3 py-1 text-xs text-muted-foreground">
+        <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
           {task.status || "PENDING"}
         </span>
       </div>

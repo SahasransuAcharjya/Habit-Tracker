@@ -11,7 +11,7 @@ type TaskCardProps = {
 };
 
 const priorityStyles: Record<string, string> = {
-  LOW: "bg-stone-100 text-foreground",
+  LOW: "bg-muted text-foreground",
   MEDIUM: "bg-amber-500/15 text-amber-300 ring-1 ring-amber-500/20",
   HIGH: "bg-primary-500/15 text-primary-300 ring-1 ring-primary-500/20",
 };
@@ -80,7 +80,7 @@ export default function TaskCard({
           {onSelect ? (
             <button
               onClick={() => onSelect(task)}
-              className="rounded-xl border border-border px-3 py-2 text-sm font-medium text-foreground transition hover:bg-stone-100"
+              className="rounded-xl border border-border px-3 py-2 text-sm font-medium text-foreground transition hover:bg-muted"
             >
               View
             </button>

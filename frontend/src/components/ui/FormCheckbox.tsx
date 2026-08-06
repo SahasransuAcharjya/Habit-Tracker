@@ -22,7 +22,7 @@ export default function FormCheckbox({
         checked={checked}
         disabled={disabled}
         onChange={(e) => onChange(e.target.checked)}
-        className="h-4 w-4 rounded border border-slate-600 bg-background accent-red-500"
+        className="h-4 w-4 rounded border border-slate-600 bg-background accent-primary-500"
       />
       <span>{label}</span>
     </label>

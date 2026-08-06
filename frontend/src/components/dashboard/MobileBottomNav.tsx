@@ -28,7 +28,7 @@ export default function MobileBottomNav() {
               className={`flex flex-col items-center justify-center rounded-xl px-2 py-2 text-[11px] transition-all duration-[550ms] ease-out active:scale-[0.94] ${
                 isActive
                   ? "bg-primary-500 font-semibold text-white shadow-sm shadow-primary-500/20"
-                  : "text-muted-foreground hover:bg-stone-100 hover:text-foreground"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
               <span className="text-base">{item.icon}</span>

@@ -37,7 +37,7 @@ export default function Modal({
           <h3 className="text-lg font-semibold text-foreground">{title}</h3>
           <button
             onClick={onClose}
-            className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition hover:bg-stone-100 hover:text-foreground"
+            className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition hover:bg-muted hover:text-foreground"
           >
             ✕
           </button>

@@ -25,7 +25,7 @@ export default function ReminderStatusCard({
           className={`rounded-full px-3 py-1 text-xs font-medium ${
             remindersEnabled
               ? "bg-sky-500/15 text-sky-600 ring-1 ring-sky-500/25"
-              : "bg-stone-100 text-muted-foreground"
+              : "bg-muted text-muted-foreground"
           }`}
         >
           {remindersEnabled ? "Enabled" : "Disabled"}
