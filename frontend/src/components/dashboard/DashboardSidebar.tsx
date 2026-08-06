@@ -48,9 +48,9 @@ export default function DashboardSidebar({
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition ${
+              className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-[550ms] ease-out active:scale-[0.98] ${
                 isActive
-                  ? "bg-red-500 font-semibold text-white"
+                  ? "bg-red-500 font-semibold text-white shadow-md shadow-red-500/20"
                   : "text-stone-600 hover:bg-stone-100 hover:text-stone-800"
               }`}
             >
@@ -70,7 +70,7 @@ export default function DashboardSidebar({
 
       <button
         onClick={handleLogout}
-        className="mt-6 w-full rounded-xl border border-stone-300 px-4 py-3 text-sm font-medium text-stone-700 transition hover:bg-stone-100"
+        className="mt-6 w-full rounded-xl border border-stone-200 px-4 py-3 text-sm font-medium text-stone-700 transition-all duration-[550ms] ease-out hover:border-stone-300 hover:bg-stone-50 hover:shadow-sm active:scale-[0.98] active:translate-y-0"
       >
         Logout
       </button>

@@ -22,14 +22,14 @@ export default function HomePage() {
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/register"
-              className="rounded-xl bg-red-500 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 ease-out hover:-translate-y-[1px] hover:bg-red-400 hover:shadow-lg hover:shadow-red-500/30 active:scale-[0.98] active:translate-y-0"
+              className="rounded-xl bg-red-500 px-5 py-3 text-sm font-semibold text-white transition-all duration-[550ms] ease-out hover:-translate-y-[1px] hover:bg-red-400 hover:shadow-lg hover:shadow-red-500/30 active:scale-[0.98] active:translate-y-0"
             >
               Get started
             </Link>
 
             <Link
               href="/login"
-              className="rounded-xl border border-stone-200 bg-white px-5 py-3 text-sm font-medium text-stone-700 transition-all duration-300 ease-out hover:-translate-y-[1px] hover:border-stone-300 hover:bg-stone-50 hover:shadow-sm active:scale-[0.98] active:translate-y-0"
+              className="rounded-xl border border-stone-200 bg-white px-5 py-3 text-sm font-medium text-stone-700 transition-all duration-[550ms] ease-out hover:-translate-y-[1px] hover:border-stone-300 hover:bg-stone-50 hover:shadow-sm active:scale-[0.98] active:translate-y-0"
             >
               Login
             </Link>

@@ -25,9 +25,9 @@ export default function MobileBottomNav() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex flex-col items-center justify-center rounded-xl px-2 py-2 text-[11px] transition ${
+              className={`flex flex-col items-center justify-center rounded-xl px-2 py-2 text-[11px] transition-all duration-[550ms] ease-out active:scale-[0.94] ${
                 isActive
-                  ? "bg-red-500 text-white"
+                  ? "bg-red-500 font-semibold text-white shadow-sm shadow-red-500/20"
                   : "text-stone-600 hover:bg-stone-100 hover:text-stone-800"
               }`}
             >

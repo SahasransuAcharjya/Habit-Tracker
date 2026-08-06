@@ -35,7 +35,7 @@ export default function Button({
   return (
     <button
       disabled={disabled}
-      className={`rounded-xl font-semibold transition-all duration-300 ease-out hover:-translate-y-[1px] active:scale-[0.98] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:active:scale-100 disabled:hover:shadow-none ${variantClasses[variant]} ${sizeClasses[size]} ${fullWidth ? "w-full" : ""} ${className}`}
+      className={`rounded-xl font-semibold transition-all duration-[550ms] ease-out hover:-translate-y-[1px] active:scale-[0.98] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:active:scale-100 disabled:hover:shadow-none ${variantClasses[variant]} ${sizeClasses[size]} ${fullWidth ? "w-full" : ""} ${className}`}
       {...props}
     >
       {children}
