@@ -1,0 +1,126 @@
+=== DEPLOYMENT AUDIT REPORT ===
+Project: Vow (Activity Assistant)
+Date: 2026-08-18
+Reviewer: Antigravity AI
+
+=== CRITICAL ISSUES (Must Fix Before Deployment) ===
+1. [EMPTY .GITIGNORE & LEAKED SECRETS]
+   - File: /.gitignore (Line 1)
+   - Issue: Root `.gitignore` is completely empty (0 bytes). Confidential database credentials, JWT secrets, and VAPID private keys in `backend/.env` (`postgresql://postgres:KSAcharjya@047...`) risk being committed to public version control.
+   - Fix: Populate `.gitignore` with `.env`, `.env.local`, `node_modules/`, `.next/`, `dist/`, and scratch files. Immediately rotate the database password and VAPID keys.
+
+2. [HARDCODED FALLBACK JWT SECRET]
+   - File: backend/src/config/env.js (Line 9)
+   - Issue: `jwtSecret` falls back to `"dev_jwt_secret_change_me"`. If `JWT_SECRET` is omitted in production environments, tokens will be signed with a known weak secret, allowing arbitrary JWT forgery.
+   - Fix: Throw a fatal error on backend startup if `process.env.JWT_SECRET` is undefined or empty when `NODE_ENV === "production"`.
+
+3. [EXPOSING INTERNAL ERROR STACKS & MESSAGES TO CLIENTS]
+   - File: backend/src/middleware/authMiddleware.js (Line 26) & backend/src/middleware/errorMiddleware.js (Line 10)
+   - Issue: `authMiddleware` returns `error.message` in 401 JSON responses, exposing detailed JWT verification/parser errors. `errorMiddleware` prints full error stacks when `NODE_ENV !== "production"`.
+   - Fix: Sanitize error responses sent to client callers; log detailed error details server-side only.
+
+4. [NEXT.JS MIDDLEWARE NAMING INCOMPATIBILITY]
+   - File: frontend/src/proxy.ts (Line 4)
+   - Issue: Next.js App Router expects `middleware.ts` at `src/middleware.ts` or root. Renaming it to `proxy.ts` prevents Next.js from automatically registering route protection middleware, leaving dashboard routes client-side accessible without token checks on initial server load.
+   - Fix: Rename `src/proxy.ts` to `src/middleware.ts` and export default / middleware function properly.
+
+=== HIGH PRIORITY ISSUES ===
+1. [DIRECT FETCH CALLS BYPASSING API UTILITY & AUTH WRAPPER]
+   - Files:
+     - frontend/src/app/(dashboard)/tasks/create/page.tsx (Line 61)
+     - frontend/src/app/(dashboard)/tasks/[taskId]/page.tsx (Line 44)
+   - Issue: Pages make direct `fetch()` calls using `localStorage.getItem("activity_token")` instead of using the centralized `apiPost` / `apiGet` utilities from `src/lib/api.ts`. This bypasses unified error handling, base URL fallback, and authorization headers.
+   - Fix: Refactor component fetch logic to use `apiGet`, `apiPost`, `apiPatch` from `@/lib/api`.
+
+2. [SEQUENTIAL N+1 PROMISE EXECUTION IN CRON JOBS]
+   - Files:
+     - backend/src/jobs/generateDailyReportJob.js (Lines 19-27)
+     - backend/src/jobs/sendReminderJob.js (Lines 40-48)
+   - Issue: Cron jobs iterate sequentially over users with `for...of` loops performing database queries and web-push network operations one by one. As user count grows, job execution will block and time out.
+   - Fix: Batch processing with chunked `Promise.all()` or delegate jobs to a dedicated message queue (e.g. BullMQ / Redis).
+
+3. [HEALTH CHECK DOES NOT VALIDATE DB CONNECTIVITY]
+   - File: backend/src/app.js (Lines 29-35)
+   - Issue: `/api/health` returns `200 OK` statically without querying the database via Prisma (`prisma.$queryRaw` or `prisma.user.findFirst`). Load balancers will mark instances healthy even if database connectivity is completely lost.
+   - Fix: Add a DB ping check inside `/api/health` and return `530 Service Unavailable` if database connection fails.
+
+4. [ENVIRONMENT VARIABLE KEY MISMATCH IN DOCUMENTATION]
+   - Files: README.md (Lines 62-63) vs backend/src/config/env.js (Lines 12-14)
+   - Issue: `README.md` documents `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY`, but backend code reads `WEB_PUSH_PUBLIC_KEY` and `WEB_PUSH_PRIVATE_KEY`.
+   - Fix: Align environment variable keys in `README.md` and `.env.example` with backend implementation.
+
+=== MEDIUM PRIORITY IMPROVEMENTS ===
+1. [MISSING AUTOMATED TEST SUITE]
+   - Files: backend/package.json, frontend/package.json
+   - Issue: Neither backend nor frontend contains unit or integration test frameworks (e.g. Jest, Supertest, Vitest). No `npm test` script is defined.
+   - Fix: Setup Jest/Supertest for backend route validation and React Testing Library / Vitest for frontend components.
+
+2. [SCRATCH & DEBUG FILES IN CODEBASE]
+   - Files:
+     - backend/test.js
+     - frontend/refactor.js
+   - Issue: One-off utility and test scripts remain in project directories.
+   - Fix: Remove `test.js` and `refactor.js` prior to production release.
+
+3. [DATABASE COMPOUND INDEX OPTIMIZATION]
+   - File: backend/prisma/schema.prisma (Lines 114-118)
+   - Issue: `TaskInstance` has separate single-column indexes on `userId` and `scheduledDate`. Daily query patterns consistently query `where: { userId, scheduledDate }`.
+   - Fix: Add a compound index `@@index([userId, scheduledDate, status])` for optimal query execution performance.
+
+4. [CORS ALLOWING ALL REQUESTS WITHOUT ORIGIN HEADER]
+   - File: backend/src/config/cors.js (Lines 5-7)
+   - Issue: Requests missing an `Origin` header are allowed unconditionally. While required for server-to-server or mobile apps, web-only backends should restrict or validate origin headers strictly.
+   - Fix: Explicitly document or restrict no-origin requests based on API consumer requirements.
+
+=== LOW PRIORITY / NICE TO HAVE ===
+1. [CONTAINERIZATION (DOCKER) CONFIGURATION]
+   - Issue: No `Dockerfile` or `docker-compose.yml` is present in the repository for streamlined deployment across cloud providers.
+   - Recommendation: Add multi-stage build Dockerfiles for backend Express app and Next.js frontend.
+
+2. [CI/CD PIPELINE CONFIGURATION]
+   - Issue: No `.github/workflows` or deployment pipeline files are configured.
+   - Recommendation: Add GitHub Actions workflow for linting, type-checking, building, and automated testing.
+
+=== DEPLOYMENT CHECKLIST ===
+[ ] All critical issues resolved
+[ ] All high priority issues addressed or documented
+[ ] Tests passing
+[ ] Security review complete
+[ ] Environment variables configured
+[ ] Documentation updated
+[ ] Monitoring and logging in place
+[ ] Rollback plan documented
+
+=== NEXT STEPS FOR DEPLOYMENT ===
+1. Populate root `.gitignore` and remove untracked secrets/scratch files (`backend/.env`, `test.js`, `refactor.js`).
+2. Rotate exposed PostgreSQL database password and Web-Push keys.
+3. Enforce strict environment variable checks in `backend/src/config/env.js` (throw error if `JWT_SECRET` is missing in production).
+4. Rename `frontend/src/proxy.ts` to `frontend/src/middleware.ts` to restore Next.js route protection.
+5. Standardize API calls in `frontend/src/app/(dashboard)/tasks/create/page.tsx` and `tasks/[taskId]/page.tsx` using `@/lib/api`.
+6. Update backend `/api/health` endpoint to perform live database ping before returning HTTP 200.
+7. Standardize VAPID key names across `README.md`, `.env.example`, and backend `env.js`.
+8. Setup Docker & CI/CD deployment pipelines.
+
+=== FILES REQUIRING ATTENTION ===
+- `/.gitignore`: Add missing ignore patterns for `.env`, `node_modules`, `.next`, `dist`, scratch scripts.
+- `backend/.env`: Rotate database credentials and secret keys.
+- `backend/src/config/env.js`: Enforce mandatory production checks for JWT_SECRET and DATABASE_URL.
+- `backend/src/middleware/authMiddleware.js`: Strip `error: error.message` from HTTP responses.
+- `backend/src/app.js`: Implement database connection health check under `/api/health`.
+- `backend/src/jobs/generateDailyReportJob.js`: Optimize job processing with batching.
+- `backend/src/jobs/sendReminderJob.js`: Batch web-push notifications.
+- `backend/prisma/schema.prisma`: Add compound index `@@index([userId, scheduledDate, status])`.
+- `frontend/src/proxy.ts`: Rename to `frontend/src/middleware.ts`.
+- `frontend/src/app/(dashboard)/tasks/create/page.tsx`: Replace direct `fetch` with `apiPost`.
+- `frontend/src/app/(dashboard)/tasks/[taskId]/page.tsx`: Replace direct `fetch` with `apiGet`.
+- `backend/test.js`: Delete scratch file.
+- `frontend/refactor.js`: Delete scratch file.
+- `README.md`: Fix VAPID environment variable documentation.
+
+=== POSITIVE OBSERVATIONS ===
+- Robust Prisma schema modeling with clear Enums, cascade deletes, and indexing.
+- Clean layer separation in backend architecture (Routes -> Validators -> Controllers -> Services -> Repositories).
+- Zod schema validation middleware cleanly isolating request parsing errors.
+- Graceful shutdown handling implemented in `backend/src/server.js` handling `SIGINT` and `SIGTERM`.
+- Responsive dynamic UI with custom CSS variable-based theming engine and context providers.
+- Real-time animated analog clock engine with persistent face options and drag & drop custom background rendering.
