@@ -3,6 +3,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { AppProvider } from "@/context/AppContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { NotificationProvider } from "@/context/NotificationContext";
+import { ClockFaceProvider } from "@/context/ClockFaceContext";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -43,13 +44,15 @@ export default function RootLayout({
           }}
         />
         <ThemeProvider>
-          <AuthProvider>
-            <NotificationProvider>
-              <AppProvider>
-                {children}
-              </AppProvider>
-            </NotificationProvider>
-          </AuthProvider>
+          <ClockFaceProvider>
+            <AuthProvider>
+              <NotificationProvider>
+                <AppProvider>
+                  {children}
+                </AppProvider>
+              </NotificationProvider>
+            </AuthProvider>
+          </ClockFaceProvider>
         </ThemeProvider>
       </body>
     </html>

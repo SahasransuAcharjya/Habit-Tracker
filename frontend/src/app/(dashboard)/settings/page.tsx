@@ -10,6 +10,7 @@ import { useNotifications } from "@/hooks/useNotifications";
 import NotificationPermissionCard from "@/components/notifications/NotificationPermissionCard";
 import ReminderStatusCard from "@/components/notifications/ReminderStatusCard";
 import { useTheme } from "@/context/ThemeContext";
+import ClockFaceSelector from "@/components/settings/ClockFaceSelector";
 
 type Profile = {
   id?: string;
@@ -225,6 +226,11 @@ export default function SettingsPage() {
               ]}
             />
             <p className="mt-1 text-xs text-muted-foreground">Changing the sound will play a preview.</p>
+          </div>
+
+          {/* Clock Face */}
+          <div className="mt-6 rounded-2xl border border-border bg-background/50 p-4">
+            <ClockFaceSelector />
           </div>
         </div>
 
