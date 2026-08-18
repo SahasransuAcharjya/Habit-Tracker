@@ -1,39 +1,56 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import LiveClock from "./LiveClock";
 
-/**
- * FloatingClock
- * - On /today  → renders the full clock inside the page (this component renders nothing;
- *                the full clock is embedded directly in the Today page).
- * - On all other pages → renders a compact floating widget fixed to bottom-right.
- */
+function useTime() {
+  const [time, setTime] = useState<Date | null>(null);
+  useEffect(() => {
+    setTime(new Date());
+    const id = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  return time;
+}
+
+const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 export default function FloatingClock() {
   const pathname = usePathname();
-  const isToday = pathname === "/today";
+  const time = useTime();
 
-  if (isToday) return null; // Full clock is shown in the Today page itself
+  // Hide on the Today page — the clock is already in TodayHero
+  if (pathname === "/today") return null;
+  if (!time) return null;
+
+  const hours = time.getHours();
+  const minutes = time.getMinutes().toString().padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const hours12 = (hours % 12 || 12).toString().padStart(2, "0");
+  const day = DAY_NAMES[time.getDay()];
+  const date = `${MONTH_NAMES[time.getMonth()]} ${time.getDate()}`;
 
   return (
     <div
       id="floating-clock-widget"
       className="fixed bottom-20 right-4 z-50 lg:bottom-6 lg:right-6"
     >
-      <div
-        className="
-          group relative flex cursor-default select-none flex-col items-center
-          rounded-2xl border border-white/10 bg-black/80 px-3 pb-3 pt-2.5
-          shadow-2xl shadow-black/40 backdrop-blur-md
-          transition-all duration-500 ease-out
-          hover:scale-105 hover:shadow-primary-500/20
-        "
-        style={{ minWidth: 90 }}
-      >
-        {/* Subtle red glow behind */}
-        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-primary-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-        <LiveClock compact />
+      <div className="
+        flex select-none flex-col items-end gap-0.5
+        rounded-2xl border border-white/10 bg-black/75
+        px-4 py-3 shadow-2xl shadow-black/40 backdrop-blur-md
+        transition-all duration-300 hover:bg-black/85
+      ">
+        {/* Time */}
+        <p className="text-xl font-bold tabular-nums leading-none text-white">
+          {hours12}:{minutes}
+          <span className="ml-1 text-sm font-semibold text-primary-400">{ampm}</span>
+        </p>
+        {/* Day · Date */}
+        <p className="text-[11px] font-medium text-white/50">
+          {day} · {date}
+        </p>
       </div>
     </div>
   );
