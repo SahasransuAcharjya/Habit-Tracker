@@ -2,9 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { useNotifications } from "@/context/NotificationContext";
 
 export default function CreateTaskPage() {
   const router = useRouter();
+  const { addNotification } = useNotifications();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -70,6 +72,12 @@ export default function CreateTaskPage() {
       if (!response.ok || !result.success) {
         throw new Error(result.message || "Failed to create task.");
       }
+
+      addNotification({
+        title: "Task created",
+        message: `"${formData.title}" has been added to your task list.`,
+        type: "success",
+      });
 
       router.push("/tasks");
     } catch (err) {

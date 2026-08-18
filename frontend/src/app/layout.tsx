@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { AuthProvider } from "@/context/AuthContext";
 import { AppProvider } from "@/context/AppContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { NotificationProvider } from "@/context/NotificationContext";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -43,9 +44,11 @@ export default function RootLayout({
         />
         <ThemeProvider>
           <AuthProvider>
-            <AppProvider>
-              {children}
-            </AppProvider>
+            <NotificationProvider>
+              <AppProvider>
+                {children}
+              </AppProvider>
+            </NotificationProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>
